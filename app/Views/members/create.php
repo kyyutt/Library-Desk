@@ -59,28 +59,13 @@
         </div>
         <div class="row">
             <div class="col-md-6 col-sm-12">
-                <div class="form-group">
-                    <label for="membership_date">Tanggal Bergabung</label>
-                    <input type="date" id="membership_date" name="membership_date" class="form-control" required>
-                </div>
-            </div>
-            <div class="col-md-6 col-sm-12">
-                <div class="form-group">
-                    <label for="status">Status</label>
-                    <select id="status" name="status" class="form-control" required>
-                        <option value="active">Aktif</option>
-                        <option value="inactive">Tidak Aktif</option>
-                    </select>
-                </div>
-            </div>
+            <div class="form-group">
+            <label for="membership_date">Tanggal Bergabung</label>
+            <input type="date" id="membership_date" name="membership_date" class="form-control" value="<?= date('Y-m-d'); ?>" disabled>
+            <input type="hidden" name="membership_date" value="<?= date('Y-m-d'); ?>">
         </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <div class="form-group">
-                    <label for="notes">Catatan</label>
-                    <textarea id="notes" name="notes" class="form-control" placeholder="Catatan tambahan" rows="3"></textarea>
-                </div>
             </div>
+
         </div>
         <div class="row">
             <div class="col-md-12 col-sm-12">

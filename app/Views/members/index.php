@@ -6,6 +6,7 @@
             <div class="title">
                 <h4>DataTable</h4>
             </div>
+            
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
@@ -16,6 +17,9 @@
                     </li>
                 </ol>
             </nav>
+            
+        </div><div class="col-md-6 col-sm-12 text-right">
+            <a href=<?= base_url('admin/members/create'); ?> class="btn btn-primary">Tambah Member</a>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
 
@@ -63,14 +67,15 @@
                         <td><?= esc($member['address']); ?></td>
                         <td><?= esc($member['membership_date']); ?></td>
                         <td>
-                            <div class="table-actions">
-                                <a href="/admin/members/edit/<?= esc($member['id']); ?>" data-color="#265ed7">
-                                    <i class="icon-copy dw dw-edit2"></i>
-                                </a>
-                                <a href="/admin/members/delete/<?= esc($member['id']); ?>" data-color="#e95959">
-                                    <i class="icon-copy dw dw-delete-3"></i>
-                                </a>
-                            </div>
+                        <div class="table-actions">
+    <a href="<?= base_url('admin/members/edit/' . esc($member['id'])); ?>" data-color="#265ed7">
+        <i class="icon-copy dw dw-edit2"></i>
+    </a>
+    <a href="<?= base_url('admin/members/delete/' . esc($member['id'])); ?>" data-color="#e95959" onclick="return confirm('Apakah Anda yakin ingin menghapus anggota ini?');">
+        <i class="icon-copy dw dw-delete-3"></i>
+    </a>
+</div>
+
                         </td>
                     </tr>
                 <?php endforeach; ?>

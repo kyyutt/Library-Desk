@@ -34,18 +34,16 @@
                 <tr>
                     <th>
                         <div class="dt-checkbox">
-                            <input
-                                type="checkbox"
-                                name="select_all"
-                                value="1"
-                                id="example-select-all" />
+                            <input type="checkbox" name="select_all" value="1" id="example-select-all" />
                             <span class="dt-checkbox-label"></span>
                         </div>
                     </th>
                     <th>Judul</th>
                     <th>Penulis</th>
                     <th>Kategori</th>
-                    <th>Tanggal Terbit</th>
+                    <th>Tahun Terbit</th>
+                    <th>Rak</th>
+                    <th>Status</th>
                     <th class="datatable-nosort">Aksi</th>
                 </tr>
             </thead>
@@ -62,14 +60,56 @@
                         <td><?= esc($book['author']); ?></td>
                         <td><?= esc($book['category']); ?></td>
                         <td><?= esc($book['year']); ?></td>
+                        <td><?= esc($book['rack']); ?></td>
+                        <td>
+                            <span class="badge badge-pill" 
+                                  data-bgcolor="<?= $book['status'] == 'available' ? '#d4edda' : ($book['status'] == 'borrowed' ? '#f8d7da' : '#fff3cd'); ?>"
+                                  data-color="#265ed7">
+                                <?= esc(ucfirst($book['status'])); ?>
+                            </span>
+                        </td>
                         <td>
                             <div class="table-actions">
-                                <a href="/admin/books/edit/<?= esc($book['id']); ?>" data-color="#265ed7">
+                                <a href="<?= base_url('admin/books/detail/' . esc($book['id'])); ?>" data-color="#265ed7">
+                                    <i class="icon-copy dw dw-eye"></i>
+                                </a>
+                                <a href="<?= base_url('admin/books/edit/' . esc($book['id'])); ?>" data-color="#265ed7">
                                     <i class="icon-copy dw dw-edit2"></i>
                                 </a>
-                                <a href="/admin/books/delete/<?= esc($book['id']); ?>" data-color="#e95959">
+                                <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($book['id']); ?>" data-color="#e95959">
                                     <i class="icon-copy dw dw-delete-3"></i>
                                 </a>
+                            </div>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="confirmation-modal-<?= esc($book['id']); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Konfirmasi Hapus</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-center font-18">
+                                            <p class="padding-top-30 mb-30">
+                                                Apakah Anda yakin ingin menghapus buku ini?
+                                            </p>
+                                            <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto">
+                                                <div class="col-6">
+                                                    <button type="button" class="btn btn-secondary border-radius-100 btn-block" data-dismiss="modal">
+                                                        NO
+                                                    </button>
+                                                </div>
+                                                <div class="col-6">
+                                                    <a href="<?= base_url('admin/books/delete/' . esc($book['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
+                                                        YES
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </td>
                     </tr>

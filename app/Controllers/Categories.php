@@ -31,7 +31,7 @@ class Categories extends BaseController
         $this->categoryModel->save([
             'category_name' => $this->request->getPost('category_name'),
         ]);
-        return redirect()->to('/categories');
+        return redirect()->to('admin/categories');
     }
 
     public function edit($id)
@@ -45,12 +45,12 @@ class Categories extends BaseController
         $this->categoryModel->update($id, [
             'category_name' => $this->request->getPost('category_name'),
         ]);
-        return redirect()->to('/categories');
+        return redirect()->to('admin/categories');
     }
 
     public function delete($id)
     {
         $this->categoryModel->delete($id);
-        return redirect()->to('/categories');
+        return redirect()->to('admin/categories');
     }
 }

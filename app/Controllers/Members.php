@@ -36,7 +36,7 @@ class Members extends BaseController
             'address' => $this->request->getPost('address'),
             'membership_date' => $this->request->getPost('membership_date'),
         ]);
-        return redirect()->to('/members');
+        return redirect()->to('admin/members');
     }
 
     public function edit($id)
@@ -53,12 +53,12 @@ class Members extends BaseController
             'phone' => $this->request->getPost('phone'),
             'address' => $this->request->getPost('address'),
         ]);
-        return redirect()->to('/members');
+        return redirect()->to('admin/members');
     }
 
     public function delete($id)
     {
         $this->memberModel->delete($id);
-        return redirect()->to('/members');
+        return redirect()->to('admin/members');
     }
 }

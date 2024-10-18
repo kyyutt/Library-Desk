@@ -12,19 +12,19 @@
                         <a href="index.html">Home</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Kategori
+                        Rak
                     </li>
                 </ol>
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <a href="/admin/categories/create" class="btn btn-primary">Tambah Kategori</a>
+            <a href="/admin/racks/create" class="btn btn-primary">Tambah Rak</a>
         </div>
     </div>
 </div>
 <div class="card-box mb-30">
     <div class="pd-20">
-        <h4 class="text-blue h4">Daftar Kategori</h4>
+        <h4 class="text-blue h4">Daftar Rak</h4>
     </div>
     <div class="pb-20">
         <table class="checkbox-datatable table nowrap">
@@ -36,32 +36,32 @@
                             <span class="dt-checkbox-label"></span>
                         </div>
                     </th>
-                    <th>Nama Kategori</th>
+                    <th>Nama Rak</th>
                     <th class="datatable-nosort">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($categories as $category): ?>
+                <?php foreach ($racks as $rack): ?>
                     <tr>
                         <td>
                             <div class="dt-checkbox">
-                                <input type="checkbox" name="category_ids[]" value="<?= esc($category['id']); ?>" id="category-<?= esc($category['id']); ?>" />
+                                <input type="checkbox" name="rack_ids[]" value="<?= esc($rack['id']); ?>" id="rack-<?= esc($rack['id']); ?>" />
                                 <span class="dt-checkbox-label"></span>
                             </div>
                         </td>
-                        <td><?= esc($category['category_name']); ?></td>
+                        <td><?= esc($rack['rack_number']); ?></td>
                         <td>
                             <div class="table-actions">
-                                <a href="<?= base_url('admin/categories/edit/' . esc($category['id'])); ?>" data-color="#265ed7">
+                                <a href="<?= base_url('admin/racks/edit/' . esc($rack['id'])); ?>" data-color="#265ed7">
                                     <i class="icon-copy dw dw-edit2"></i>
                                 </a>
-                                <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($category['id']); ?>" data-color="#e95959">
+                                <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($rack['id']); ?>" data-color="#e95959">
                                     <i class="icon-copy dw dw-delete-3"></i>
                                 </a>
                             </div>
 
                             <!-- Modal -->
-                            <div class="modal fade" id="confirmation-modal-<?= esc($category['id']); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal fade" id="confirmation-modal-<?= esc($rack['id']); ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -72,7 +72,7 @@
                                         </div>
                                         <div class="modal-body text-center font-18">
                                             <p class="padding-top-30 mb-30">
-                                                Apakah Anda yakin ingin menghapus kategori ini?
+                                                Apakah Anda yakin ingin menghapus Rak ini?
                                             </p>
                                             <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto">
                                                 <div class="col-6">
@@ -81,7 +81,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-6">
-                                                    <a href="<?= base_url('admin/categories/delete/' . esc($category['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
+                                                    <a href="<?= base_url('admin/racks/delete/' . esc($rack['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
                                                         YES
                                                     </a>
                                                 </div>

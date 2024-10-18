@@ -10,5 +10,5 @@ class BooksModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $allowedFields    = ['title', 'author', 'publisher', 'year', 'isbn', 'category_id', 'location', 'status'];
+    protected $allowedFields    = ['title', 'author', 'publisher', 'year', 'isbn', 'category_id', 'rack_id', 'status'];
 }
