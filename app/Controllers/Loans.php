@@ -3,8 +3,6 @@
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
-
 use App\Models\LoansModel;
 use App\Models\MembersModel;
 use App\Models\BooksModel;
@@ -49,37 +47,82 @@ class Loans extends BaseController
 
     public function create()
     {
-        return view('loans/create');
+        // Get members and books to display in the create view
+        $data['members'] = $this->memberModel->findAll();
+        $data['books'] = $this->bookModel->findAll();
+
+        return view('loans/create', $data);
     }
 
     public function store()
     {
+        // Get the loan date from the form input
+        $loanDate = $this->request->getPost('loan_date');
+
+        // Calculate the due date as one week from the loan date
+        $dueDate = date('Y-m-d', strtotime($loanDate . ' +7 days'));
+
+        // Save the loan data
         $this->loanModel->save([
             'member_id' => $this->request->getPost('member_id'),
             'book_id' => $this->request->getPost('book_id'),
-            'loan_date' => $this->request->getPost('loan_date'),
-            'due_date' => $this->request->getPost('due_date'),
+            'loan_date' => $loanDate,
+            'due_date' => $dueDate, // Automatically set the due date
         ]);
-        return redirect()->to('/loans');
-    }
 
-    public function edit($id)
-    {
-        $data['loan'] = $this->loanModel->find($id);
-        return view('loans/edit', $data);
-    }
+        // Update the book status to borrowed
+        $this->bookModel->update($this->request->getPost('book_id'), [
+            'status' => 'borrowed',
+        ]);
 
-    public function update($id)
+        return redirect()->to('admin/loans');
+    }
+    public function returnLoan($id)
     {
         $this->loanModel->update($id, [
-            'return_date' => $this->request->getPost('return_date'),
+            'return_date' => date('Y-m-d'), // Set the return date to today
         ]);
-        return redirect()->to('/loans');
+        return redirect()->to('admin/loans')->with('message', 'Buku berhasil dikembalikan.'); // Optional flash message
     }
+
+
+    // public function edit($id)
+    // {
+    //     $data['loan'] = $this->loanModel->find($id);
+    //     // Get members and books for the edit view
+    //     $data['members'] = $this->memberModel->findAll();
+    //     $data['books'] = $this->bookModel->findAll();
+
+    //     return view('loans/edit', $data);
+    // }
+
+    // public function update($id)
+    // {
+    //     $this->loanModel->update($id, [
+    //         'return_date' => $this->request->getPost('return_date'),
+    //     ]);
+
+    //     // Assuming the book ID is retrieved from the loan record
+    //     $loan = $this->loanModel->find($id);
+    //     $this->bookModel->update($loan['book_id'], [
+    //         'status' => 'available',
+    //     ]);
+
+    //     return redirect()->to('admin/loans');
+    // }
 
     public function delete($id)
     {
+        $loan = $this->loanModel->find($id);
         $this->loanModel->delete($id);
-        return redirect()->to('/loans');
+
+        // Update the book status back to available when the loan is deleted
+        if ($loan) {
+            $this->bookModel->update($loan['book_id'], [
+                'status' => 'available',
+            ]);
+        }
+
+        return redirect()->to('admin/loans');
     }
 }

@@ -1,23 +1,21 @@
-<?php
-
-namespace App\Controllers;
+<?php 
+namespace App\Controllers\Admin;
 
 use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
-
 use App\Models\FinesModel;
+
 class Fines extends BaseController
 {
-    protected $fineModel;
+    protected $finesModel;
 
     public function __construct()
     {
-        $this->fineModel = new FinesModel();
+        $this->finesModel = new FinesModel();
     }
 
     public function index()
     {
-        $data['fines'] = $this->fineModel->findAll();
+        $data['fines'] = $this->finesModel->findAll();
         return view('fines/index', $data);
     }
 
@@ -28,31 +26,37 @@ class Fines extends BaseController
 
     public function store()
     {
-        $this->fineModel->save([
+        $this->finesModel->save([
             'loan_id' => $this->request->getPost('loan_id'),
             'fine_amount' => $this->request->getPost('fine_amount'),
             'status' => $this->request->getPost('status'),
         ]);
-        return redirect()->to('/fines');
+
+        return redirect()->to('/admin/fines')->with('success', 'Denda berhasil ditambahkan.');
     }
 
     public function edit($id)
     {
-        $data['fine'] = $this->fineModel->find($id);
-        return view('fines/edit', $data);
+        $data['fine'] = $this->finesModel->find($id);
+        return view('fines/create', $data);
     }
 
     public function update($id)
     {
-        $this->fineModel->update($id, [
+        $this->finesModel->update($id, [
+            'loan_id' => $this->request->getPost('loan_id'),
+            'fine_amount' => $this->request->getPost('fine_amount'),
             'status' => $this->request->getPost('status'),
         ]);
-        return redirect()->to('/fines');
+
+        return redirect()->to('/admin/fines')->with('success', 'Denda berhasil diperbarui.');
     }
 
     public function delete($id)
     {
-        $this->fineModel->delete($id);
-        return redirect()->to('/fines');
+        $this->finesModel->delete($id);
+        return redirect()->to('/admin/fines')->with('success', 'Denda berhasil dihapus.');
     }
 }
+
+?>

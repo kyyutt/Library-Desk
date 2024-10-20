@@ -57,12 +57,19 @@
                         <td><?= esc($loan['book_title']); ?></td>
                         <td><?= esc($loan['loan_date']); ?></td>
                         <td><?= esc($loan['due_date']); ?></td>
-                        <td><?= esc($loan['return_date']); ?></td>
+                        <td>
+                            <?= $loan['return_date'] ? esc($loan['return_date']) : '<span class="badge badge-warning">Belum dikembalikan</span>'; ?>
+                        </td>
                         <td>
                             <div class="table-actions">
-                                <a href="/admin/loans/edit/<?= esc($loan['id']); ?>" data-color="#265ed7">
+                                <?php if (!$loan['return_date']): ?>
+                                    <a href="/admin/loans/return/<?= esc($loan['id']); ?>" data-color="#28a745" title="Tandai Terkembalikan">
+                                        <i class="fa fa-undo"></i>
+                                    </a>
+                                <?php endif; ?>
+                                <!-- <a href="/admin/loans/edit/<?= esc($loan['id']); ?>" data-color="#265ed7">
                                     <i class="icon-copy dw dw-edit2"></i>
-                                </a>
+                                </a> -->
                                 <a href="/admin/loans/delete/<?= esc($loan['id']); ?>" data-color="#e95959">
                                     <i class="icon-copy dw dw-delete-3"></i>
                                 </a>

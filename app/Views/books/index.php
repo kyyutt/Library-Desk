@@ -61,12 +61,16 @@
                         <td><?= esc($book['category']); ?></td>
                         <td><?= esc($book['year']); ?></td>
                         <td><?= esc($book['rack']); ?></td>
+                        
                         <td>
-                            <span class="badge badge-pill" 
-                                  data-bgcolor="<?= $book['status'] == 'available' ? '#d4edda' : ($book['status'] == 'borrowed' ? '#f8d7da' : '#fff3cd'); ?>"
-                                  data-color="#265ed7">
-                                <?= esc(ucfirst($book['status'])); ?>
-                            </span>
+    <span class="badge rounded-pill text-white
+        <?= $book['status'] == 'available' ? 'bg-success' : 
+           ($book['status'] == 'borrowed' ? 'bg-danger' : 'bg-warning'); ?>">
+        <?= esc(ucfirst($book['status'])); ?>
+    </span>
+</td>
+
+
                         </td>
                         <td>
                             <div class="table-actions">
