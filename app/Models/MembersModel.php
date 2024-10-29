@@ -11,5 +11,17 @@ class MembersModel extends Model
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $allowedFields    = ['name', 'email', 'phone', 'address', 'membership_date'];
+    public function hasRelatedRecords($memberId)
+{
+    // Check if the member has any related loans
+    $loanExists = $this->db->table('loans')->where('member_id', $memberId)->countAllResults();
+
+    // Check if the member has any related reservations
+    $reservationExists = $this->db->table('reservations')->where('member_id', $memberId)->countAllResults();
+
+    // Return true if the member has any loans or reservations
+    return $loanExists > 0 || $reservationExists > 0;
+}
+
 
 }

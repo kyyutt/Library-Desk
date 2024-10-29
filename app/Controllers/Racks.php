@@ -4,8 +4,11 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Exceptions\PageNotFoundException;
+use Exception;
 
 use App\Models\RacksModel;
+
 class Racks extends BaseController
 {
     protected $rackModel;
@@ -50,7 +53,15 @@ class Racks extends BaseController
 
     public function delete($id)
     {
-        $this->rackModel->delete($id);
-        return redirect()->to('admin/racks');
+        if ($this->rackModel->hasRelatedRecords($id)) {
+            return redirect()->to('admin/racks')->with('error', 'Unable to delete rack. It has associated books.');
+        }
+
+        try {
+            $this->rackModel->delete($id);
+            return redirect()->to('admin/racks')->with('success', 'Rack deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->to('admin/racks')->with('error', 'Unable to delete category: ' . $e->getMessage());
+        }
     }
 }

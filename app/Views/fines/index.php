@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col-md-6 col-sm-12">
             <div class="title">
-                <h4>Data Denda</h4>
+                <h4>DataTable</h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
@@ -27,26 +27,72 @@
         <h4 class="text-blue h4">Daftar Denda</h4>
     </div>
     <div class="pb-20">
-        <table class="table table-striped">
+        <table class="checkbox-datatable table nowrap">
             <thead>
                 <tr>
-                    <th>ID Peminjaman</th>
-                    <th>Jumlah Denda</th>
-                    <th>Status</th>
-                    <th class="datatable-nosort">Aksi</th>
+                    <th>
+                        <div class="dt-checkbox">
+                            <input type="checkbox" name="select_all" value="1" id="example-select-all" />
+                            <span class="dt-checkbox-label"></span>
+                        </div>
+                    </th>
+                    <th>Nama Anggota</th>
+                    <th>Judul Buku</th>
+                    <th>Tanggal Peminjaman</th>
+                    <th>Denda</th>
+                    <th class="datatable-nosort">Action</th>
                 </tr>
             </thead>
             <tbody>
                 <?php foreach ($fines as $fine): ?>
                     <tr>
-                        <td><?= esc($fine['loan_id']); ?></td>
+                        <td>
+                            <div class="dt-checkbox">
+                                <input type="checkbox" name="fine_ids[]" value="<?= esc($fine['id']); ?>" id="fine-<?= esc($fine['id']); ?>" />
+                                <span class="dt-checkbox-label"></span>
+                            </div>
+                        </td>
+                        <td><?= esc($fine['member_name']); ?></td>
+                        <td><?= esc($fine['book_title']); ?></td>
+                        <td><?= esc($fine['loan_date']); ?></td>
                         <td><?= esc($fine['fine_amount']); ?></td>
                         <td>
-                            <?= $fine['status'] === 'paid' ? '<span class="badge badge-success">Paid</span>' : '<span class="badge badge-danger">Unpaid</span>'; ?>
-                        </td>
-                        <td>
-                            <a href="/admin/fines/edit/<?= esc($fine['id']); ?>" class="btn btn-sm btn-warning">Edit</a>
-                            <a href="/admin/fines/delete/<?= esc($fine['id']); ?>" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin menghapus denda ini?');">Hapus</a>
+                            <div class="table-actions">
+                                <a href="#" data-toggle="modal" data-target="#pay-modal-<?= esc($fine['id']); ?>" data-color="#28a745" title="Tandai Lunas">
+                                    <i class="fa fa-check"></i>
+                                </a>
+                            </div>
+
+                            <!-- Modal for confirming payment -->
+                            <div class="modal fade" id="pay-modal-<?= esc($fine['id']); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Konfirmasi Pembayaran Denda</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body text-center font-18">
+                                            <p class="padding-top-30 mb-30">
+                                                Apakah Anda yakin sudah membayar denda ini?
+                                            </p>
+                                            <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto">
+                                                <div class="col-6">
+                                                    <button type="button" class="btn btn-secondary border-radius-100 btn-block" data-dismiss="modal">
+                                                        NO
+                                                    </button>
+                                                </div>
+                                                <div class="col-6">
+                                                    <a href="<?= base_url('admin/fines/pay/' . esc($fine['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
+                                                        YES
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>

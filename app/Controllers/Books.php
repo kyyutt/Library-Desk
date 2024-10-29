@@ -21,39 +21,32 @@ class Books extends BaseController
     }
 
     public function index()
-{
-    // Ambil semua buku
-    $books = $this->bookModel->findAll();
+    {
+        $books = $this->bookModel->findAll();
 
-    // Ambil semua kategori
-    $categories = $this->categoryModel->findAll();
+        $categories = $this->categoryModel->findAll();
 
-    // Ambil semua rak
-    $racks = $this->rackModel->findAll();
+        $racks = $this->rackModel->findAll();
 
-    // Gabungkan nama kategori dan rak dengan buku
-    foreach ($books as &$book) {
-        // Mendapatkan kategori
-        $category = array_filter($categories, function ($cat) use ($book) {
-            return $cat['id'] == $book['category_id'];
-        });
-        $book['category'] = !empty($category) ? reset($category)['category_name'] : 'Tidak ada kategori';
+        foreach ($books as &$book) {
+            $category = array_filter($categories, function ($cat) use ($book) {
+                return $cat['id'] == $book['category_id'];
+            });
+            $book['category'] = !empty($category) ? reset($category)['category_name'] : 'Tidak ada kategori';
 
-        // Mendapatkan rak
-        $rack = array_filter($racks, function ($rack) use ($book) {
-            return $rack['id'] == $book['rack_id'];
-        });
-        $book['rack'] = !empty($rack) ? reset($rack)['rack_number'] : 'Tidak ada rak';
+            $rack = array_filter($racks, function ($rack) use ($book) {
+                return $rack['id'] == $book['rack_id'];
+            });
+            $book['rack'] = !empty($rack) ? reset($rack)['rack_number'] : 'Tidak ada rak';
+        }
+
+        $data['books'] = $books;
+        return view('books/index', $data);
     }
-
-    $data['books'] = $books;
-    return view('books/index', $data);
-}
 
 
     public function create()
     {
-        // Ambil semua kategori untuk ditampilkan di form
         $data['categories'] = $this->categoryModel->findAll();
         $data['racks'] = $this->rackModel->findAll();
         return view('books/create', $data);
@@ -73,29 +66,29 @@ class Books extends BaseController
         return redirect()->to('admin/books');
     }
 
-    public function detail($id) {
+    public function detail($id)
+    {
         $book = $this->bookModel->find($id);
-        
+
         if (!$book) {
             return redirect()->to('admin/books')->with('error', 'Buku tidak ditemukan.');
         }
-        
+
         $category = $this->categoryModel->find($book['category_id']);
         $book['category'] = $category ? $category['category_name'] : 'Tidak ada kategori';
-        
+
         $rack = $this->rackModel->find($book['rack_id']);
         $book['rack'] = $rack && isset($rack['rack_number']) ? $rack['rack_number'] : 'Tidak ada rak';
-    
+
         return view('books/detail', [
-            'book' => $book, 
-            'category' => $book['category'], 
+            'book' => $book,
+            'category' => $book['category'],
             'rack' => $book['rack']
         ]);
     }
-    
+
     public function edit($id)
     {
-        // Ambil data buku dan kategori untuk ditampilkan di form
         $data['book'] = $this->bookModel->find($id);
         $data['categories'] = $this->categoryModel->findAll();
         $data['racks'] = $this->rackModel->findAll();
@@ -118,7 +111,15 @@ class Books extends BaseController
 
     public function delete($id)
     {
-        $this->bookModel->delete($id);
-        return redirect()->to('admin/books');
+        if ($this->bookModel->hasRelatedRecords($id)) {
+            return redirect()->to('admin/books')->with('error', 'Unable to delete book. It has associated loans or reservations.');
+        }
+
+        try {
+            $this->bookModel->delete($id);
+            return redirect()->to('admin/books')->with('success', 'Book deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->to('admin/books')->with('error', 'Unable to delete book: ' . $e->getMessage());
+        }
     }
 }

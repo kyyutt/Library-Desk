@@ -13,24 +13,23 @@ class Reservations extends BaseController
     protected $reservationModel;
     protected $booksModel;
     protected $membersModel;
+    protected $loansModel;
 
     public function __construct()
     {
         $this->reservationModel = new ReservationModel();
         $this->booksModel = new BooksModel();
         $this->membersModel = new MembersModel();
+        $this->loansModel = new LoansModel();
     }
 
     public function index()
     {
-        // Fetch all reservations
         $reservations = $this->reservationModel->findAll();
 
-        // Fetch all books and members to associate with the reservations
         $books = $this->booksModel->findAll();
         $members = $this->membersModel->findAll();
 
-        // Modify reservations to include book titles and member names
         foreach ($reservations as &$reservation) {
             $member = array_filter($members, function ($m) use ($reservation) {
                 return $m['id'] === $reservation['member_id'];
@@ -53,88 +52,75 @@ class Reservations extends BaseController
         $membersModel = new MembersModel();
         $booksModel = new BooksModel();
 
-        // Ambil data peminjaman yang aktif (yang belum dikembalikan)
         $activeLoans = $loansModel->where('return_date', null)->findAll();
 
-        // Ambil nama anggota dan judul buku untuk peminjaman aktif
-        foreach ($activeLoans as &$loan) {
-            $member = $membersModel->find($loan['member_id']);
-            $loan['member_name'] = $member['name']; // Menyimpan nama anggota
-            $book = $booksModel->find($loan['book_id']);
-            $loan['book_title'] = $book['title']; // Menyimpan judul buku
+        $borrowedMemberIds = array_column($activeLoans, 'member_id');
+
+        if (!empty($borrowedMemberIds)) {
+            $availableMembers = $membersModel->whereNotIn('id', $borrowedMemberIds)->findAll();
+        } else {
+            $availableMembers = $membersModel->findAll();
         }
 
-        // Ambil semua anggota untuk dropdown
-        $members = $membersModel->findAll();
+        foreach ($activeLoans as &$loan) {
+            $member = $membersModel->find($loan['member_id']);
+            $loan['member_name'] = $member['name'];
+            $book = $booksModel->find($loan['book_id']);
+            $loan['book_title'] = $book['title'];
+        }
 
         return view('reservations/create', [
+            'availableMembers' => $availableMembers,
             'activeLoans' => $activeLoans,
-            'members' => $members, // Ambil semua anggota
-            'books' => $booksModel->findAll() // Ambil semua buku
+            'reservationDate' => date('Y-m-d'),
         ]);
     }
 
     public function store()
     {
         $data = [
-            'member_id' => $this->request->getPost('member_id'), // Mengisi member_id dari form
-            'book_id' => $this->request->getPost('book_id'), // Mengisi book_id dari form
+            'member_id' => $this->request->getPost('member_id'),
+            'book_id' => $this->request->getPost('book_id'),
             'reservation_date' => $this->request->getPost('reservation_date'),
+            'status' => 'active',
         ];
 
-        $reservationModel = new \App\Models\ReservationModel();
-        $reservationModel->save($data);
+        $this->reservationModel->save($data);
+
+        $this->booksModel->update($this->request->getPost('book_id'), ['status' => 'reserved']);
 
         return redirect()->to('/admin/reservations')->with('success', 'Reservasi berhasil ditambahkan.');
     }
 
-    public function edit($id)
+    public function complete($id)
     {
-        // Find the specific reservation
-        $data['reservation'] = $this->reservationModel->find($id);
-
-        // Pass books and members to the view to edit the reservation
-        $data['books'] = $this->booksModel->findAll();
-        $data['members'] = $this->membersModel->findAll();
-
-        return view('reservations/edit', $data);
-    }
-
-    public function update($id)
-    {
-        // Update reservation status
-        $status = $this->request->getPost('status');
-        $this->reservationModel->update($id, [
-            'status' => $status,
-            'book_id' => $this->request->getPost('book_id'),
-            'member_id' => $this->request->getPost('member_id'),
-        ]);
-
-        // Update the book's status based on the reservation status
-        $bookId = $this->request->getPost('book_id');
-
-        if ($status === 'active') {
-            // If reservation is active, set book status to 'reserved'
-            $this->booksModel->update($bookId, ['status' => 'reserved']);
-        } elseif ($status === 'cancelled' || $status === 'completed') {
-            // If reservation is cancelled or completed, set book status to 'available'
-            $this->booksModel->update($bookId, ['status' => 'available']);
-        }
-
-        return redirect()->to('admin/reservations');
-    }
-
-    public function delete($id)
-    {
-        // Find the reservation before deleting to get the book_id
         $reservation = $this->reservationModel->find($id);
 
-        if ($reservation) {
-            // Set the book status back to 'available' when deleting a reservation
-            $this->booksModel->update($reservation['book_id'], ['status' => 'available']);
+        if ($reservation && $reservation['status'] == 'active') {
+            $this->reservationModel->update($id, ['status' => 'completed']);
+
+            $this->loansModel->insert([
+                'book_id' => $reservation['book_id'],
+                'member_id' => $reservation['member_id'],
+                'loan_date' => date('Y-m-d'),
+                'due_date' => date('Y-m-d', strtotime('+7 days')) 
+            ]);
+
+            return redirect()->to('admin/reservations')->with('success', 'Reservation marked as completed and loan created.');
         }
 
-        $this->reservationModel->delete($id);
-        return redirect()->to('admin/reservations');
+        return redirect()->to('admin/reservations')->with('error', 'Invalid reservation or action.');
+    }
+
+    public function cancel($id)
+    {
+        $reservation = $this->reservationModel->find($id);
+
+        if ($reservation && $reservation['status'] == 'active') {
+            $this->reservationModel->update($id, ['status' => 'cancelled']);
+            return redirect()->to('admin/reservations')->with('success', 'Reservation cancelled.');
+        }
+
+        return redirect()->to('admin/reservations')->with('error', 'Invalid reservation or action.');
     }
 }

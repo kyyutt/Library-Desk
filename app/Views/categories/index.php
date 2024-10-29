@@ -1,5 +1,6 @@
 <?= $this->extend('layout/pages-layout'); ?>
 <?= $this->section('content'); ?>
+
 <div class="page-header">
     <div class="row">
         <div class="col-md-6 col-sm-12">
@@ -22,10 +23,33 @@
         </div>
     </div>
 </div>
+
 <div class="card-box mb-30">
     <div class="pd-20">
         <h4 class="text-blue h4">Daftar Kategori</h4>
     </div>
+
+    <!-- Success Alert -->
+<!-- Success Alert -->
+<?php if (session()->getFlashdata('success')): ?>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <strong>Success!</strong> <?= session()->getFlashdata('success'); ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<?php endif; ?>
+
+<!-- Error Alert -->
+<?php if (session()->getFlashdata('error')): ?>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>Error!</strong> <?= session()->getFlashdata('error'); ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<?php endif; ?>
+
     <div class="pb-20">
         <table class="checkbox-datatable table nowrap">
             <thead>
@@ -98,4 +122,4 @@
     </div>
 </div>
 
-<?= $this->endSection() ?>
+<?= $this->endSection(); ?>

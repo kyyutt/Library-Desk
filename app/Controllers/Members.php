@@ -58,7 +58,15 @@ class Members extends BaseController
 
     public function delete($id)
     {
-        $this->memberModel->delete($id);
-        return redirect()->to('admin/members');
+        if ($this->memberModel->hasRelatedRecords($id)) {
+            return redirect()->to('admin/members')->with('error', 'Unable to delete member. It has associated loans or reservations.');
+        }
+
+        try {
+            $this->memberModel->delete($id);
+            return redirect()->to('admin/members')->with('success', 'Member deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->to('admin/members')->with('error', 'Unable to delete member: ' . $e->getMessage());
+        }
     }
 }

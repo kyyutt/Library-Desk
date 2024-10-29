@@ -32,12 +32,6 @@
         <table class="checkbox-datatable table nowrap">
             <thead>
                 <tr>
-                    <th>
-                        <div class="dt-checkbox">
-                            <input type="checkbox" name="select_all" value="1" id="example-select-all" />
-                            <span class="dt-checkbox-label"></span>
-                        </div>
-                    </th>
                     <th>Judul Buku</th>
                     <th>Nama Anggota</th>
                     <th>Tanggal Reservasi</th>
@@ -48,12 +42,6 @@
             <tbody>
                 <?php foreach ($reservations as $reservation): ?>
                     <tr>
-                        <td>
-                            <div class="dt-checkbox">
-                                <input type="checkbox" name="reservation_ids[]" value="<?= esc($reservation['id']); ?>" id="reservation-<?= esc($reservation['id']); ?>" />
-                                <span class="dt-checkbox-label"></span>
-                            </div>
-                        </td>
                         <td><?= esc($reservation['book_title']); ?></td>
                         <td><?= esc($reservation['member_name']); ?></td>
                         <td><?= esc($reservation['reservation_date']); ?></td>
@@ -65,46 +53,16 @@
                         </td>
                         <td>
                             <div class="table-actions">
-                                <a href="<?= base_url('admin/reservations/detail/' . esc($reservation['id'])); ?>" data-color="#265ed7">
-                                    <i class="icon-copy dw dw-eye"></i>
-                                </a>
-                                <a href="<?= base_url('admin/reservations/edit/' . esc($reservation['id'])); ?>" data-color="#265ed7">
-                                    <i class="icon-copy dw dw-edit2"></i>
-                                </a>
-                                <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($reservation['id']); ?>" data-color="#e95959">
-                                    <i class="icon-copy dw dw-delete-3"></i>
-                                </a>
-                            </div>
-
-                            <!-- Modal -->
-                            <div class="modal fade" id="confirmation-modal-<?= esc($reservation['id']); ?>" tabindex="-1" role="dialog" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title">Konfirmasi Hapus</h5>
-                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                <span aria-hidden="true">&times;</span>
-                                            </button>
-                                        </div>
-                                        <div class="modal-body text-center font-18">
-                                            <p class="padding-top-30 mb-30">
-                                                Apakah Anda yakin ingin menghapus Reservasi ini?
-                                            </p>
-                                            <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto">
-                                                <div class="col-6">
-                                                    <button type="button" class="btn btn-secondary border-radius-100 btn-block" data-dismiss="modal">
-                                                        NO
-                                                    </button>
-                                                </div>
-                                                <div class="col-6">
-                                                    <a href="<?= base_url('admin/reservations/delete/' . esc($reservation['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
-                                                        YES
-                                                    </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                <?php if ($reservation['status'] == 'active'): ?>
+                                    <!-- Complete action -->
+                                    <a href="<?= base_url('admin/reservations/complete/' . esc($reservation['id'])); ?>" title="Complete Reservation">
+                                        <i class="icon-copy ion-checkmark-round text-success"></i>
+                                    </a>
+                                    <!-- Cancel action -->
+                                    <a href="<?= base_url('admin/reservations/cancel/' . esc($reservation['id'])); ?>" title="Cancel Reservation">
+                                        <i class="icon-copy ion-close-round text-danger"></i>
+                                    </a>
+                                <?php endif; ?>
                             </div>
                         </td>
                     </tr>
@@ -114,4 +72,4 @@
     </div>
 </div>
 
-<?= $this->endSection() ?>
+<?= $this->endSection(); ?>

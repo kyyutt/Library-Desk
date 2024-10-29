@@ -31,24 +31,25 @@
                 </li>
                 
                 <!-- Sirkulasi -->
-                <li class="dropdown">
-                    <a href="javascript:;" class="dropdown-toggle">
-                        <span class="micon bi bi-book"></span>
-                        <span class="mtext">Sirkulasi</span>
-                    </a>
-                    <ul class="submenu">
-                        <li><a href="<?= base_url('admin/loans'); ?>">Peminjaman Buku</a></li>
-                        <li><a href="<?= base_url('admin/reservations'); ?>">Reservasi Buku</a></li>
-                    </ul>
-                </li>
-                
-                <!-- Denda -->
-                <li>
-                    <a href="<?= base_url('admin/fines'); ?>" class="dropdown-toggle no-arrow">
-                        <span class="micon bi bi-exclamation-circle"></span>
-                        <span class="mtext">Denda</span>
-                    </a>
-                </li>
+<li class="dropdown">
+    <a href="javascript:;" class="dropdown-toggle">
+        <span class="micon bi bi-book"></span>
+        <span class="mtext">Sirkulasi</span>
+    </a>
+    <ul class="submenu">
+        <li><a href="<?= base_url('admin/loans'); ?>">Peminjaman Buku</a></li>
+        <li><a href="<?= base_url('admin/reservations'); ?>">Reservasi Buku</a></li>
+    </ul>
+</li>
+
+<!-- Denda -->
+<li>
+    <a href="<?= base_url('admin/fines'); ?>" class="dropdown-toggle no-arrow">
+        <span class="micon bi bi-exclamation-circle"></span>
+        <span class="mtext">Denda</span>
+    </a>
+</li>
+
                 
                 <!-- Laporan -->
                 <li class="dropdown">

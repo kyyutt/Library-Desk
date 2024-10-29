@@ -51,30 +51,30 @@ $routes->group('admin', static function($routes){
         $routes->get('detail/(:hash)', 'Books::detail/$1');
     });
     
-    $routes->group('loans', static function($routes) {
-        $routes->get('/', 'Loans::index'); // Rute untuk melihat semua anggota
-        $routes->get('create', 'Loans::create'); // Rute untuk membuat anggota baru
-        $routes->post('store', 'Loans::store'); // Rute untuk menyimpan anggota baru
-        $routes->get('edit/(:hash)', 'Loans::edit/$1'); // Rute untuk mengedit anggota
-        $routes->post('update/(:hash)', 'Loans::update/$1'); // Rute untuk memperbarui anggota
-        $routes->get('delete/(:hash)', 'Loans::delete/$1'); // Rute untuk menghapus anggota
-        $routes->get('return/(:num)', 'Loans::returnLoan/$1');
-
+    $routes->group('loans', static function($routes)  {
+        $routes->get('/', 'Loans::index'); // Route to view all loans
+        $routes->get('create', 'Loans::create'); // Route to create a new loan
+        $routes->post('store', 'Loans::store'); // Route to store new loan data
+        $routes->get('return/(:num)', 'Loans::returnLoan/$1'); // Route to mark loan as returned, identified by ID
+        $routes->get('extendDueDate/(:num)', 'Loans::extendDueDate/$1'); // Route to extend the due date of a loan, identified by ID
     });
+
+    $routes->group('fines', static function($routes) {
+        $routes->get('/', 'Fines::index'); // Menampilkan daftar denda
+        $routes->get('create/(:num)', 'Fines::create/$1'); // Form untuk menambah denda, loanId is required
+        $routes->post('store', 'Fines::store'); // Menyimpan denda baru
+        $routes->get('pay/(:num)', 'Fines::pay/$1'); 
+        $routes->get('delete/(:num)', 'Fines::delete/$1'); // Add delete route if needed
+        $routes->post('updateStatus/(:num)', 'Fines::updateStatus/$1'); // Add update status route if needed
+    });
+
     $routes->group('reservations', static function($routes) {
         $routes->get('/', 'Reservations::index'); // Rute untuk melihat semua anggota
         $routes->get('create', 'Reservations::create'); // Rute untuk membuat anggota baru
         $routes->post('store', 'Reservations::store'); // Rute untuk menyimpan anggota baru
-        $routes->get('edit/(:hash)', 'Reservations::edit/$1'); // Rute untuk mengedit anggota
-        $routes->post('update/(:hash)', 'Reservations::update/$1'); // Rute untuk memperbarui anggota
-        $routes->get('delete/(:hash)', 'Reservations::delete/$1'); // Rute untuk menghapus anggota
+        $routes->get('complete/(:num)', 'Reservations::complete/$1'); // Mark reservation as completed
+        $routes->get('cancel/(:num)', 'Reservations::cancel/$1'); 
     });
-    $routes->group('fines', static function($routes) {
-        $routes->get('/', 'Fines::index'); // Rute untuk melihat semua anggota
-        $routes->get('create', 'Fines::create'); // Rute untuk membuat anggota baru
-        $routes->post('store', 'Fines::store'); // Rute untuk menyimpan anggota baru
-        $routes->get('edit/(:hash)', 'Fines::edit/$1'); // Rute untuk mengedit anggota
-        $routes->post('update/(:hash)', 'Fines::update/$1'); // Rute untuk memperbarui anggota
-        $routes->get('delete/(:hash)', 'Fines::delete/$1'); // Rute untuk menghapus anggota
-    });
+
+   
 });

@@ -37,36 +37,43 @@
     <?php endif; ?>
 
     <form action="<?= base_url('admin/reservations/store'); ?>" method="POST">
-        <div class="form-group">
-            <label for="member_id">Nama Anggota</label>
-            <select id="member_id" name="member_id" class="form-control" required>
-                <option value="">Pilih Anggota</option>
-                <?php foreach ($members as $member): ?>
-                    <option value="<?= $member['id']; ?>"><?= esc($member['name']); ?></option>
-                <?php endforeach; ?>
-            </select>
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                    <label for="member_id">Anggota</label>
+                    <select id="member_id" name="member_id" class="form-control" required>
+                        <?php foreach ($availableMembers as $member): ?>
+                            <option value="<?= $member['id']; ?>"><?= $member['name']; ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                    <label for="book_id">Buku yang Sedang Dipinjam</label>
+                    <select id="book_id" name="book_id" class="form-control" required>
+                        <?php foreach ($activeLoans as $loan): ?>
+                            <option value="<?= $loan['book_id']; ?>"><?= $loan['book_title']; ?> (Dipinjam oleh <?= $loan['member_name']; ?>)</option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
         </div>
-        
-        <div class="form-group">
-            <label for="book_id">Buku yang Dipinjam</label>
-            <select id="book_id" name="book_id" class="form-control" required>
-                <option value="">Pilih Buku</option>
-                <?php foreach ($activeLoans as $loan): ?>
-                    <option value="<?= $loan['book_id']; ?>">
-                        <?= esc($loan['book_title']); ?> - Dipinjam oleh <?= esc($loan['member_name']); ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                    <label for="reservation_date">Tanggal Reservasi</label>
+                    <input type="date" id="reservation_date" name="reservation_date" class="form-control" value="<?= date('Y-m-d'); ?>" disabled>
+                    <!-- Hidden field to submit reservation_date -->
+                    <input type="hidden" name="reservation_date" value="<?= date('Y-m-d'); ?>">
+                </div>
+            </div>
         </div>
-        
-        <div class="form-group">
-            <label for="reservation_date">Tanggal Reservasi</label>
-            <input type="date" id="reservation_date" name="reservation_date" class="form-control" value="<?= date('Y-m-d'); ?>" required readonly>
-        </div>
-        
-        <div class="form-group">
-            <button type="submit" class="btn btn-primary">Simpan Reservasi</button>
-            <a href="<?= base_url('admin/reservations'); ?>" class="btn btn-secondary">Kembali</a>
+        <div class="row">
+            <div class="col-md-12 col-sm-12">
+                <button type="submit" class="btn btn-primary">Simpan</button>
+                <a href="<?= base_url('admin/reservations'); ?>" class="btn btn-secondary">Kembali</a>
+            </div>
         </div>
     </form>
 </div>

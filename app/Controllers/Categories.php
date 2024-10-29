@@ -4,8 +4,12 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use CodeIgniter\HTTP\ResponseInterface;
+use CodeIgniter\Exceptions\PageNotFoundException;
+use Exception;
+
 
 use App\Models\CategoriesModel;
+
 class Categories extends BaseController
 {
     protected $categoryModel;
@@ -50,7 +54,15 @@ class Categories extends BaseController
 
     public function delete($id)
     {
-        $this->categoryModel->delete($id);
-        return redirect()->to('admin/categories');
+        if ($this->categoryModel->hasRelatedRecords($id)) {
+            return redirect()->to('admin/categories')->with('error', 'Unable to delete category. It has associated books.');
+        }
+
+        try {
+            $this->categoryModel->delete($id);
+            return redirect()->to('admin/categories')->with('success', 'Category deleted successfully.');
+        } catch (\Exception $e) {
+            return redirect()->to('admin/categories')->with('error', 'Unable to delete category: ' . $e->getMessage());
+        }
     }
 }

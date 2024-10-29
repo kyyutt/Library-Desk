@@ -11,4 +11,19 @@ class BooksModel extends Model
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $allowedFields    = ['title', 'author', 'publisher', 'year', 'isbn', 'category_id', 'rack_id', 'status'];
+    public function hasRelatedRecords($bookId)
+{
+    // Check if the member has any related loans
+    $loanExists = $this->db->table('loans')->where('book_id', $bookId)->countAllResults();
+
+    // Check if the member has any related reservations
+    $reservationExists = $this->db->table('reservations')->where('book_id', $bookId)->countAllResults();
+
+    // Return true if the member has any loans or reservations
+    return $loanExists > 0 || $reservationExists > 0;
+}
+public function findAvailableBooks()
+    {
+        return $this->where('status', 'available')->findAll();
+    }
 }
