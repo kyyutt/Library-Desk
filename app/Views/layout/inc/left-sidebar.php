@@ -23,10 +23,10 @@
                         <span class="mtext">Kelola Data</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="<?= base_url('admin/members'); ?>">Anggota</a></li>
-                        <li><a href="<?= base_url('admin/categories'); ?>">Kategori</a></li>
-                        <li><a href="<?= base_url('admin/racks'); ?>">Rak</a></li>
-                        <li><a href="<?= base_url('admin/books'); ?>">Buku</a></li>
+                        <li><a href="<?= base_url('/members'); ?>">Anggota</a></li>
+                        <li><a href="<?= base_url('/categories'); ?>">Kategori</a></li>
+                        <li><a href="<?= base_url('/racks'); ?>">Rak</a></li>
+                        <li><a href="<?= base_url('/books'); ?>">Buku</a></li>
                     </ul>
                 </li>
                 
@@ -37,14 +37,14 @@
         <span class="mtext">Sirkulasi</span>
     </a>
     <ul class="submenu">
-        <li><a href="<?= base_url('admin/loans'); ?>">Peminjaman Buku</a></li>
-        <li><a href="<?= base_url('admin/reservations'); ?>">Reservasi Buku</a></li>
+        <li><a href="<?= base_url('/loans'); ?>">Peminjaman Buku</a></li>
+        <li><a href="<?= base_url('/reservations'); ?>">Reservasi Buku</a></li>
     </ul>
 </li>
 
 <!-- Denda -->
 <li>
-    <a href="<?= base_url('admin/fines'); ?>" class="dropdown-toggle no-arrow">
+    <a href="<?= base_url('/fines'); ?>" class="dropdown-toggle no-arrow">
         <span class="micon bi bi-exclamation-circle"></span>
         <span class="mtext">Denda</span>
     </a>
@@ -58,15 +58,15 @@
                         <span class="mtext">Laporan</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="<?= base_url('admin/book-logs'); ?>">Log Aktivitas Buku</a></li>
-                        <li><a href="<?= base_url('admin/loan-reports'); ?>">Laporan Peminjaman</a></li>
-                        <li><a href="<?= base_url('admin/member-reports'); ?>">Laporan Anggota</a></li>
+                        <li><a href="<?= base_url('/book-logs'); ?>">Log Aktivitas Buku</a></li>
+                        <li><a href="<?= base_url('/loan-reports'); ?>">Laporan Peminjaman</a></li>
+                        <li><a href="<?= base_url('/member-reports'); ?>">Laporan Anggota</a></li>
                     </ul>
                 </li>
                 
                 <!-- Admin -->
                 <li>
-                    <a href="<?= base_url('admin/admin'); ?>" class="dropdown-toggle no-arrow">
+                    <a href="<?= base_url('/admin'); ?>" class="dropdown-toggle no-arrow">
                         <span class="micon bi bi-person-circle"></span>
                         <span class="mtext">Admin</span>
                     </a>

@@ -166,7 +166,7 @@
 							<span class="user-icon">
 								<img src="/assets/vendors/images/photo1.jpg" alt="" />
 							</span>
-							<span class="user-name">Ross C. Lopez</span>
+							<span class="user-name"><?= session()->get('nama')?></span>
 						</a>
 						<div
 							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
@@ -180,7 +180,7 @@
 							<a class="dropdown-item" href="faq.html"
 								><i class="dw dw-help"></i> Help</a
 							>
-							<a class="dropdown-item" href="login.html"
+							<a class="dropdown-item" href="/auth/logout"
 								><i class="dw dw-logout"></i> Log Out</a
 							>
 						</div>
