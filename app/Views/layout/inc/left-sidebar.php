@@ -64,9 +64,8 @@
                     </ul>
                 </li>
                 
-                <!-- Admin -->
                 <li>
-                    <a href="<?= base_url('/admin'); ?>" class="dropdown-toggle no-arrow">
+                    <a href="<?= base_url('/admins'); ?>" class="dropdown-toggle no-arrow">
                         <span class="micon bi bi-person-circle"></span>
                         <span class="mtext">Admin</span>
                     </a>

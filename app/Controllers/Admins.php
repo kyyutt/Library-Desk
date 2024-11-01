@@ -2,22 +2,20 @@
 
 namespace App\Controllers;
 
-use App\Controllers\BaseController;
-use CodeIgniter\HTTP\ResponseInterface;
-
 use App\Models\AdminsModel;
+
 class Admins extends BaseController
 {
-    protected $adminModel;
+    protected $adminsModel;
 
     public function __construct()
     {
-        $this->adminModel = new AdminsModel();
+        $this->adminsModel = new AdminsModel();
     }
 
     public function index()
     {
-        $data['admins'] = $this->adminModel->findAll();
+        $data['admins'] = $this->adminsModel->findAll();
         return view('admins/index', $data);
     }
 
@@ -28,32 +26,36 @@ class Admins extends BaseController
 
     public function store()
     {
-        $this->adminModel->save([
+        $this->adminsModel->save([
             'username' => $this->request->getPost('username'),
             'password' => password_hash($this->request->getPost('password'), PASSWORD_DEFAULT),
-            'email' => $this->request->getPost('email'),
+            'email'    => $this->request->getPost('email'),
+            'nama'     => $this->request->getPost('nama'),
         ]);
-        return redirect()->to('/admins');
+
+        return redirect()->to('/admins')->with('success', 'Admin berhasil ditambahkan.');
     }
 
     public function edit($id)
     {
-        $data['admin'] = $this->adminModel->find($id);
+        $data['admin'] = $this->adminsModel->find($id);
         return view('admins/edit', $data);
     }
 
     public function update($id)
     {
-        $this->adminModel->update($id, [
+        $this->adminsModel->update($id, [
             'username' => $this->request->getPost('username'),
-            'email' => $this->request->getPost('email'),
+            'email'    => $this->request->getPost('email'),
+            'nama'     => $this->request->getPost('nama'),
         ]);
-        return redirect()->to('/admins');
+
+        return redirect()->to('/admins')->with('success', 'Admin berhasil diperbarui.');
     }
 
     public function delete($id)
     {
-        $this->adminModel->delete($id);
-        return redirect()->to('/admins');
+        $this->adminsModel->delete($id);
+        return redirect()->to('/admins')->with('success', 'Admin berhasil dihapus.');
     }
 }

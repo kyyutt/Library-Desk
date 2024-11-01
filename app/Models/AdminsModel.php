@@ -10,6 +10,6 @@ class AdminsModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $allowedFields    = ['username', 'password', 'email'];
+    protected $allowedFields    = ['username', 'password', 'email', 'nama'];
 
 }

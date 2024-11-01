@@ -77,3 +77,11 @@ $routes->group('reservations', static function ($routes) {
     $routes->get('complete/(:num)', 'Reservations::complete/$1'); // Mark reservation as completed
     $routes->get('cancel/(:num)', 'Reservations::cancel/$1');
 });
+$routes->group('admins', static function ($routes) {
+    $routes->get('/', 'Admins::index'); // Rute untuk melihat semua anggota
+    $routes->get('create', 'Admins::create'); // Rute untuk membuat anggota baru
+    $routes->post('store', 'Admins::store'); // Rute untuk menyimpan anggota baru
+    $routes->get('edit/(:hash)', 'Admins::edit/$1'); // Rute untuk mengedit anggota
+    $routes->post('update/(:hash)', 'Admins::update/$1'); // Rute untuk memperbarui anggota
+    $routes->get('delete/(:hash)', 'Admins::delete/$1'); // Rute untuk menghapus anggota
+});
