@@ -18,7 +18,7 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <a href="/admin/racks/create" class="btn btn-primary">Tambah Rak</a>
+            <a href="//racks/create" class="btn btn-primary">Tambah Rak</a>
         </div>
     </div>
 </div>
@@ -70,7 +70,7 @@
                         <td><?= esc($rack['rack_number']); ?></td>
                         <td>
                             <div class="table-actions">
-                                <a href="<?= base_url('admin/racks/edit/' . esc($rack['id'])); ?>" data-color="#265ed7">
+                                <a href="<?= base_url('/racks/edit/' . esc($rack['id'])); ?>" data-color="#265ed7">
                                     <i class="icon-copy dw dw-edit2"></i>
                                 </a>
                                 <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($rack['id']); ?>" data-color="#e95959">
@@ -99,7 +99,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-6">
-                                                    <a href="<?= base_url('admin/racks/delete/' . esc($rack['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
+                                                    <a href="<?= base_url('/racks/delete/' . esc($rack['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
                                                         YES
                                                     </a>
                                                 </div>

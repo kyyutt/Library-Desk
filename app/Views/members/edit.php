@@ -10,10 +10,10 @@
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="<?= base_url('admin/dashboard'); ?>">Home</a>
+                        <a href="<?= base_url('/dashboard'); ?>">Home</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="<?= base_url('admin/members'); ?>">Members</a>
+                        <a href="<?= base_url('/members'); ?>">Members</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                         Edit Member
@@ -31,7 +31,7 @@
             <p class="mb-30">Ubah data member di bawah ini</p>
         </div>
     </div>
-    <form action="<?= base_url('admin/members/update/' . esc($member['id'])); ?>" method="POST">
+    <form action="<?= base_url('/members/update/' . esc($member['id'])); ?>" method="POST">
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
@@ -71,7 +71,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="<?= base_url('admin/members'); ?>" class="btn btn-secondary">Kembali</a>
+                <a href="<?= base_url('/members'); ?>" class="btn btn-secondary">Kembali</a>
             </div>
         </div>
     </form>

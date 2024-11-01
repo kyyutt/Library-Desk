@@ -10,7 +10,7 @@
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="<?= base_url('admin/dashboard'); ?>">Home</a>
+                        <a href="<?= base_url('/dashboard'); ?>">Home</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                         Tambah Buku
@@ -36,7 +36,7 @@
         <div class="alert alert-danger"><?= session()->getFlashdata('error') ?></div>
     <?php endif; ?>
 
-    <form action="<?= base_url('admin/books/store'); ?>" method="POST">
+    <form action="<?= base_url('/books/store'); ?>" method="POST">
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
@@ -101,7 +101,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="<?= base_url('admin/books'); ?>" class="btn btn-secondary">Kembali</a>
+                <a href="<?= base_url('/books'); ?>" class="btn btn-secondary">Kembali</a>
             </div>
         </div>
     </form>

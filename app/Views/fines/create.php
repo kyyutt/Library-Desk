@@ -10,7 +10,7 @@
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="/admin/fines">Denda</a>
+                        <a href="//fines">Denda</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                         Tambah/Edit
@@ -26,7 +26,7 @@
         <h4 class="text-blue h4">Form Tambah/Edit Denda</h4>
     </div>
     <div class="pb-20">
-        <form action="<?= isset($fine) ? '/admin/fines/update/' . esc($fine['id']) : '/admin/fines/store'; ?>" method="post">
+        <form action="<?= isset($fine) ? '//fines/update/' . esc($fine['id']) : '//fines/store'; ?>" method="post">
             <div class="form-group">
                 <label for="loan_id">ID Peminjaman</label>
                 <input type="number" name="loan_id" class="form-control" value="<?= isset($fine) ? esc($fine['loan_id']) : ''; ?>" required>

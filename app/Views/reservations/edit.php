@@ -13,7 +13,7 @@
                         <a href="<?= base_url('/'); ?>">Home</a>
                     </li>
                     <li class="breadcrumb-item">
-                        <a href="<?= base_url('admin/reservations'); ?>">Data Reservasi</a>
+                        <a href="<?= base_url('/reservations'); ?>">Data Reservasi</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                         Edit Reservasi
@@ -29,7 +29,7 @@
         <h4 class="text-blue h4">Form Edit Reservasi</h4>
     </div>
     <div class="pb-20">
-        <form action="<?= base_url('admin/reservations/update/' . esc($reservation['id'])); ?>" method="POST">
+        <form action="<?= base_url('/reservations/update/' . esc($reservation['id'])); ?>" method="POST">
             <div class="form-group">
                 <label for="book_id">Judul Buku</label>
                 <select name="book_id" id="book_id" class="form-control" required>
@@ -68,7 +68,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Update Reservasi</button>
-            <a href="<?= base_url('admin/reservations'); ?>" class="btn btn-secondary">Batal</a>
+            <a href="<?= base_url('/reservations'); ?>" class="btn btn-secondary">Batal</a>
         </form>
     </div>
 </div>

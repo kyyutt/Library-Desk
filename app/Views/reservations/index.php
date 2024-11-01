@@ -19,7 +19,7 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <a href="<?= base_url('admin/reservations/create'); ?>" class="btn btn-primary">Tambah Reservasi</a>
+            <a href="<?= base_url('/reservations/create'); ?>" class="btn btn-primary">Tambah Reservasi</a>
         </div>
     </div>
 </div>
@@ -55,11 +55,11 @@
                             <div class="table-actions">
                                 <?php if ($reservation['status'] == 'active'): ?>
                                     <!-- Complete action -->
-                                    <a href="<?= base_url('admin/reservations/complete/' . esc($reservation['id'])); ?>" title="Complete Reservation">
+                                    <a href="<?= base_url('/reservations/complete/' . esc($reservation['id'])); ?>" title="Complete Reservation">
                                         <i class="icon-copy ion-checkmark-round text-success"></i>
                                     </a>
                                     <!-- Cancel action -->
-                                    <a href="<?= base_url('admin/reservations/cancel/' . esc($reservation['id'])); ?>" title="Cancel Reservation">
+                                    <a href="<?= base_url('/reservations/cancel/' . esc($reservation['id'])); ?>" title="Cancel Reservation">
                                         <i class="icon-copy ion-close-round text-danger"></i>
                                     </a>
                                 <?php endif; ?>

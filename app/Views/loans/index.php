@@ -17,7 +17,7 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <a href="<?= base_url('/admin/loans/create'); ?>" class="btn btn-primary">Tambah Peminjaman</a>
+            <a href="<?= base_url('//loans/create'); ?>" class="btn btn-primary">Tambah Peminjaman</a>
         </div>
     </div>
 </div>
@@ -95,7 +95,7 @@
                                             </button>
                                         </div>
                                         <div class="col-6">
-                                            <a href="<?= base_url('/admin/loans/return/' . esc($loan['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
+                                            <a href="<?= base_url('//loans/return/' . esc($loan['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
                                                 YES
                                             </a>
                                         </div>
@@ -126,7 +126,7 @@
                                             </button>
                                         </div>
                                         <div class="col-6">
-                                            <a href="<?= base_url('/admin/loans/extendDueDate/' . esc($loan['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
+                                            <a href="<?= base_url('//loans/extendDueDate/' . esc($loan['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
                                                 YES
                                             </a>
                                         </div>

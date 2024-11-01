@@ -19,7 +19,7 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <a href="/admin/books/create" class="btn btn-primary">Tambah Buku</a>
+            <a href="//books/create" class="btn btn-primary">Tambah Buku</a>
         </div>
     </div>
 </div>
@@ -92,10 +92,10 @@
                         </td>
                         <td>
                             <div class="table-actions">
-                                <a href="<?= base_url('admin/books/detail/' . esc($book['id'])); ?>" data-color="#265ed7">
+                                <a href="<?= base_url('/books/detail/' . esc($book['id'])); ?>" data-color="#265ed7">
                                     <i class="icon-copy dw dw-eye"></i>
                                 </a>
-                                <a href="<?= base_url('admin/books/edit/' . esc($book['id'])); ?>" data-color="#265ed7">
+                                <a href="<?= base_url('/books/edit/' . esc($book['id'])); ?>" data-color="#265ed7">
                                     <i class="icon-copy dw dw-edit2"></i>
                                 </a>
                                 <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($book['id']); ?>" data-color="#e95959">
@@ -124,7 +124,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-6">
-                                                    <a href="<?= base_url('admin/books/delete/' . esc($book['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
+                                                    <a href="<?= base_url('/books/delete/' . esc($book['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
                                                         YES
                                                     </a>
                                                 </div>

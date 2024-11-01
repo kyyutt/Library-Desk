@@ -10,7 +10,7 @@
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="<?= base_url('admin/dashboard'); ?>">Home</a>
+                        <a href="<?= base_url('/dashboard'); ?>">Home</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                         Edit Peminjaman
@@ -28,7 +28,7 @@
             <p class="mb-30">Ubah data peminjaman di bawah ini</p>
         </div>
     </div>
-    <form action="<?= base_url('admin/loans/update/' . esc($loan['id'])); ?>" method="POST">
+    <form action="<?= base_url('/loans/update/' . esc($loan['id'])); ?>" method="POST">
         <?= csrf_field(); ?>
         <div class="row">
             <div class="col-md-6 col-sm-12">

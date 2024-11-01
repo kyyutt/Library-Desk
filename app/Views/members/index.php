@@ -20,7 +20,7 @@
 
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <a href=<?= base_url('admin/members/create'); ?> class="btn btn-primary">Tambah Member</a>
+            <a href=<?= base_url('/members/create'); ?> class="btn btn-primary">Tambah Member</a>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
 
@@ -87,7 +87,7 @@
                         <td><?= esc($member['membership_date']); ?></td>
                         <td>
                             <div class="table-actions">
-                                <a href="<?= base_url('admin/members/edit/' . esc($member['id'])); ?>" data-color="#265ed7">
+                                <a href="<?= base_url('/members/edit/' . esc($member['id'])); ?>" data-color="#265ed7">
                                     <i class="icon-copy dw dw-edit2"></i>
                                 </a>
                                 <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($member['id']); ?>" data-color="#e95959">
@@ -114,7 +114,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-6">
-                                                    <a href="<?= base_url('admin/members/delete/' . esc($member['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
+                                                    <a href="<?= base_url('/members/delete/' . esc($member['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
                                                         YES
                                                     </a>
                                                 </div>

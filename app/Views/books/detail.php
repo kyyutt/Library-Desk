@@ -10,7 +10,7 @@
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="<?= base_url('admin/dashboard'); ?>">Home</a>
+                        <a href="<?= base_url('/dashboard'); ?>">Home</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                         Detail Buku
@@ -41,7 +41,7 @@
 
     <div class="row mt-4">
         <div class="col-md-12">
-            <a href="<?= base_url('admin/books'); ?>" class="btn btn-secondary">Kembali</a>
+            <a href="<?= base_url('/books'); ?>" class="btn btn-secondary">Kembali</a>
         </div>
     </div>
 </div>

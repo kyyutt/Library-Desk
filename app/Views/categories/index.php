@@ -19,7 +19,7 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <a href="/admin/categories/create" class="btn btn-primary">Tambah Kategori</a>
+            <a href="//categories/create" class="btn btn-primary">Tambah Kategori</a>
         </div>
     </div>
 </div>
@@ -76,7 +76,7 @@
                         <td><?= esc($category['category_name']); ?></td>
                         <td>
                             <div class="table-actions">
-                                <a href="<?= base_url('admin/categories/edit/' . esc($category['id'])); ?>" data-color="#265ed7">
+                                <a href="<?= base_url('/categories/edit/' . esc($category['id'])); ?>" data-color="#265ed7">
                                     <i class="icon-copy dw dw-edit2"></i>
                                 </a>
                                 <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($category['id']); ?>" data-color="#e95959">
@@ -105,7 +105,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-6">
-                                                    <a href="<?= base_url('admin/categories/delete/' . esc($category['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
+                                                    <a href="<?= base_url('/categories/delete/' . esc($category['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
                                                         YES
                                                     </a>
                                                 </div>

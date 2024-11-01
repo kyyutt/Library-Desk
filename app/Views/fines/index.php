@@ -18,7 +18,7 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <a href="/admin/fines/create" class="btn btn-primary">Tambah Denda</a>
+            <a href="//fines/create" class="btn btn-primary">Tambah Denda</a>
         </div>
     </div>
 </div>
@@ -84,7 +84,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-6">
-                                                    <a href="<?= base_url('admin/fines/pay/' . esc($fine['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
+                                                    <a href="<?= base_url('/fines/pay/' . esc($fine['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
                                                         YES
                                                     </a>
                                                 </div>

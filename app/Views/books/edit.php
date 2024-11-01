@@ -10,7 +10,7 @@
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="<?= base_url('admin/dashboard'); ?>">Home</a>
+                        <a href="<?= base_url('/dashboard'); ?>">Home</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
                         Edit Buku
@@ -28,7 +28,7 @@
             <p class="mb-30">Ubah data buku di bawah ini</p>
         </div>
     </div>
-    <form action="<?= base_url('admin/books/update/' . esc($book['id'])); ?>" method="POST">
+    <form action="<?= base_url('/books/update/' . esc($book['id'])); ?>" method="POST">
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
@@ -95,7 +95,7 @@
         <div class="row">
             <div class="col-md-12 col-sm-12">
                 <button type="submit" class="btn btn-primary">Update</button>
-                <a href="<?= base_url('admin/books'); ?>" class="btn btn-secondary">Kembali</a>
+                <a href="<?= base_url('/books'); ?>" class="btn btn-secondary">Kembali</a>
             </div>
         </div>
     </form>
