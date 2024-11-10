@@ -44,7 +44,6 @@ class Books extends BaseController
         return view('books/index', $data);
     }
 
-
     public function create()
     {
         $data['categories'] = $this->categoryModel->findAll();
@@ -54,16 +53,20 @@ class Books extends BaseController
 
     public function store()
     {
-        $this->bookModel->save([
-            'title' => $this->request->getPost('title'),
-            'author' => $this->request->getPost('author'),
-            'publisher' => $this->request->getPost('publisher'),
-            'year' => $this->request->getPost('year'),
-            'isbn' => $this->request->getPost('isbn'),
-            'category_id' => $this->request->getPost('category_id'),
-            'rack_id' => $this->request->getPost('rack_id')
-        ]);
-        return redirect()->to('admin/books');
+        try {
+            $this->bookModel->save([
+                'title' => $this->request->getPost('title'),
+                'author' => $this->request->getPost('author'),
+                'publisher' => $this->request->getPost('publisher'),
+                'year' => $this->request->getPost('year'),
+                'isbn' => $this->request->getPost('isbn'),
+                'category_id' => $this->request->getPost('category_id'),
+                'rack_id' => $this->request->getPost('rack_id')
+            ]);
+            return redirect()->to('/books')->with('success', 'Book added successfully.');
+        } catch (\Exception $e) {
+            return redirect()->to('/books/create')->with('error', 'Unable to add book: ' . $e->getMessage());
+        }
     }
 
     public function detail($id)
@@ -71,7 +74,7 @@ class Books extends BaseController
         $book = $this->bookModel->find($id);
 
         if (!$book) {
-            return redirect()->to('admin/books')->with('error', 'Buku tidak ditemukan.');
+            return redirect()->to('/books')->with('error', 'Buku tidak ditemukan.');
         }
 
         $category = $this->categoryModel->find($book['category_id']);
@@ -97,29 +100,33 @@ class Books extends BaseController
 
     public function update($id)
     {
-        $this->bookModel->update($id, [
-            'title' => $this->request->getPost('title'),
-            'author' => $this->request->getPost('author'),
-            'publisher' => $this->request->getPost('publisher'),
-            'year' => $this->request->getPost('year'),
-            'isbn' => $this->request->getPost('isbn'),
-            'category_id' => $this->request->getPost('category_id'),
-            'rack_id' => $this->request->getPost('rack_id')
-        ]);
-        return redirect()->to('admin/books');
+        try {
+            $this->bookModel->update($id, [
+                'title' => $this->request->getPost('title'),
+                'author' => $this->request->getPost('author'),
+                'publisher' => $this->request->getPost('publisher'),
+                'year' => $this->request->getPost('year'),
+                'isbn' => $this->request->getPost('isbn'),
+                'category_id' => $this->request->getPost('category_id'),
+                'rack_id' => $this->request->getPost('rack_id')
+            ]);
+            return redirect()->to('/books')->with('success', 'Book updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->to('/books/edit/' . $id)->with('error', 'Unable to update book: ' . $e->getMessage());
+        }
     }
 
     public function delete($id)
     {
         if ($this->bookModel->hasRelatedRecords($id)) {
-            return redirect()->to('admin/books')->with('error', 'Unable to delete book. It has associated loans or reservations.');
+            return redirect()->to('/books')->with('error', 'Unable to delete book. It has associated loans or reservations.');
         }
 
         try {
             $this->bookModel->delete($id);
-            return redirect()->to('admin/books')->with('success', 'Book deleted successfully.');
+            return redirect()->to('/books')->with('success', 'Book deleted successfully.');
         } catch (\Exception $e) {
-            return redirect()->to('admin/books')->with('error', 'Unable to delete book: ' . $e->getMessage());
+            return redirect()->to('/books')->with('error', 'Unable to delete book: ' . $e->getMessage());
         }
     }
 }

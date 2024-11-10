@@ -21,17 +21,23 @@ class Auth extends BaseController
         $param = $this->request->getPost();
         $admin = new \App\Models\AdminsModel();
         $item = $admin->where('username', $param['username'])->orWhere('email', $param['username'])->first();
-        if(!is_null($item)){
-            if(password_verify($param['password'], $item['password'])){
-                session()->set(['uid'=>$item['id'] ,'nama'=>'Rizqiah', 'isLogin'=>true]);
-                return redirect()->to(base_url());
-            }else{
-    
-            }
-        }else{
 
+        if (!is_null($item)) {
+            if (password_verify($param['password'], $item['password'])) {
+                session()->set([
+                    'uid' => $item['id'],
+                    'nama' => $item['email'], // Use 'name' as per the model definition
+                    'isLogin' => true
+                ]);
+                return redirect()->to(base_url());
+            } else {
+                return redirect()->back()->with('error', 'Invalid password.');
+            }
+        } else {
+            return redirect()->back()->with('error', 'User not found.');
         }
     }
+
 
     public function logout()
     {

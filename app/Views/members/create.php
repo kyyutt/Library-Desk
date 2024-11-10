@@ -32,48 +32,59 @@
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
+                    <label for="no_member">Nomor Member</label>
+                    <!-- Input terlihat yang tidak bisa diubah -->
+                    <input type="text" id="no_member" class="form-control" value="<?= $no_member; ?>" disabled>
+                    <!-- Input tersembunyi untuk menyimpan nomor member -->
+                    <input type="hidden" name="no_member" value="<?= $no_member; ?>">
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
                     <label for="name">Nama</label>
                     <input type="text" id="name" name="name" class="form-control" placeholder="Nama lengkap" required>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" class="form-control" placeholder="Email" required>
                 </div>
             </div>
-        </div>
-        <div class="row">
+
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <label for="phone">Nomor Telepon</label>
                     <input type="text" id="phone" name="phone" class="form-control" placeholder="Nomor telepon" required>
                 </div>
             </div>
+        </div>
+        <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <label for="address">Alamat</label>
                     <input type="text" id="address" name="address" class="form-control" placeholder="Alamat" required>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-12">
-            <div class="form-group">
-            <label for="membership_date">Tanggal Bergabung</label>
-            <input type="date" id="membership_date" name="membership_date" class="form-control" value="<?= date('Y-m-d'); ?>" disabled>
-            <input type="hidden" name="membership_date" value="<?= date('Y-m-d'); ?>">
-        </div>
-            </div>
 
-        </div>
-        <div class="row">
-            <div class="col-md-12 col-sm-12">
-                <button type="submit" class="btn btn-primary">Simpan</button>
-                <a href="<?= base_url('/members'); ?>" class="btn btn-secondary">Kembali</a>
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                    <label for="membership_date">Tanggal Bergabung</label>
+                    <input type="date" id="membership_date" name="membership_date" class="form-control" value="<?= date('Y-m-d'); ?>" disabled>
+                    <input type="hidden" name="membership_date" value="<?= date('Y-m-d'); ?>">
+                </div>
             </div>
         </div>
-    </form>
+
+<div class="row">
+    <div class="col-md-12 col-sm-12">
+        <button type="submit" class="btn btn-primary">Simpan</button>
+        <a href="<?= base_url('/members'); ?>" class="btn btn-secondary">Kembali</a>
+    </div>
+</div>
+</form>
 </div>
 
 <?= $this->endSection(); ?>

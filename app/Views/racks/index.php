@@ -18,7 +18,7 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <a href="//racks/create" class="btn btn-primary">Tambah Rak</a>
+            <a href="/racks/create" class="btn btn-primary">Tambah Rak</a>
         </div>
     </div>
 </div>
@@ -54,7 +54,7 @@
                             <span class="dt-checkbox-label"></span>
                         </div>
                     </th>
-                    <th>Nama Rak</th>
+                    <th>Nomor Rak</th>
                     <th class="datatable-nosort">Action</th>
                 </tr>
             </thead>
@@ -70,11 +70,11 @@
                         <td><?= esc($rack['rack_number']); ?></td>
                         <td>
                             <div class="table-actions">
-                                <a href="<?= base_url('/racks/edit/' . esc($rack['id'])); ?>" data-color="#265ed7">
-                                    <i class="icon-copy dw dw-edit2"></i>
+                                <a href="<?= base_url('/racks/edit/' . esc($rack['id'])); ?>" data-color="#265ed7"title="Edit">
+                                <i class="icon-copy fa fa-edit"></i>
                                 </a>
-                                <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($rack['id']); ?>" data-color="#e95959">
-                                    <i class="icon-copy dw dw-delete-3"></i>
+                                <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($rack['id']); ?>" data-color="#e95959" title="Delete">
+                                <i class="icon-copy fa fa-trash-o" ></i>
                                 </a>
                             </div>
 

@@ -23,10 +23,11 @@
                         <span class="mtext">Kelola Data</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="<?= base_url('/members'); ?>">Anggota</a></li>
+                        <li><a href="<?= base_url('/members'); ?>">Member</a></li>
                         <li><a href="<?= base_url('/categories'); ?>">Kategori</a></li>
                         <li><a href="<?= base_url('/racks'); ?>">Rak</a></li>
                         <li><a href="<?= base_url('/books'); ?>">Buku</a></li>
+                        <li><a href="<?= base_url('/books'); ?>">Denda</a></li>
                     </ul>
                 </li>
                 

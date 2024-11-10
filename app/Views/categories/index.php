@@ -19,7 +19,7 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <a href="//categories/create" class="btn btn-primary">Tambah Kategori</a>
+            <a href="/categories/create" class="btn btn-primary">Tambah Kategori</a>
         </div>
     </div>
 </div>
@@ -76,11 +76,11 @@
                         <td><?= esc($category['category_name']); ?></td>
                         <td>
                             <div class="table-actions">
-                                <a href="<?= base_url('/categories/edit/' . esc($category['id'])); ?>" data-color="#265ed7">
-                                    <i class="icon-copy dw dw-edit2"></i>
+                                <a href="<?= base_url('/categories/edit/' . esc($category['id'])); ?>" data-color="#265ed7" title="Edit">
+                                <i class="icon-copy fa fa-edit"></i>
                                 </a>
-                                <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($category['id']); ?>" data-color="#e95959">
-                                    <i class="icon-copy dw dw-delete-3"></i>
+                                <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($category['id']); ?>" data-color="#e95959" title="Delete">
+                                <i class="icon-copy fa fa-trash-o" ></i>
                                 </a>
                             </div>
 

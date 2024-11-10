@@ -19,7 +19,7 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <a href="//books/create" class="btn btn-primary">Tambah Buku</a>
+            <a href="/books/create" class="btn btn-primary">Tambah Buku</a>
         </div>
     </div>
 </div>
@@ -79,27 +79,26 @@
                         <td><?= esc($book['category']); ?></td>
                         <td><?= esc($book['year']); ?></td>
                         <td><?= esc($book['rack']); ?></td>
-                        
+
                         <td>
-    <span class="badge rounded-pill text-white
-        <?= $book['status'] == 'available' ? 'bg-success' : 
-           ($book['status'] == 'borrowed' ? 'bg-danger' : 'bg-warning'); ?>">
-        <?= esc(ucfirst($book['status'])); ?>
-    </span>
-</td>
+                            <span class="badge rounded-pill text-white
+        <?= $book['status'] == 'available' ? 'bg-success' : ($book['status'] == 'borrowed' ? 'bg-danger' : 'bg-warning'); ?>">
+                                <?= esc(ucfirst($book['status'])); ?>
+                            </span>
+                        </td>
 
 
                         </td>
                         <td>
                             <div class="table-actions">
-                                <a href="<?= base_url('/books/detail/' . esc($book['id'])); ?>" data-color="#265ed7">
-                                    <i class="icon-copy dw dw-eye"></i>
+                                <a href="<?= base_url('/books/detail/' . esc($book['id'])); ?>" data-color="#198754">
+                                    <i class="icon-copy fa fa-eye" title="Detail"></i>
                                 </a>
                                 <a href="<?= base_url('/books/edit/' . esc($book['id'])); ?>" data-color="#265ed7">
-                                    <i class="icon-copy dw dw-edit2"></i>
+                                    <i class="icon-copy fa fa-edit" title="Edit"></i>
                                 </a>
                                 <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($book['id']); ?>" data-color="#e95959">
-                                    <i class="icon-copy dw dw-delete-3"></i>
+                                    <i class="icon-copy fa fa-trash-o" title="Delete"></i>
                                 </a>
                             </div>
 

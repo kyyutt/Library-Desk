@@ -26,6 +26,8 @@ $routes->group('members', ['filter' => 'auth'], static function ($routes) {
     $routes->get('edit/(:hash)', 'Members::edit/$1'); // Rute untuk mengedit anggota
     $routes->post('update/(:hash)', 'Members::update/$1'); // Rute untuk memperbarui anggota
     $routes->get('delete/(:hash)', 'Members::delete/$1'); // Rute untuk menghapus anggota
+    $routes->get('print/(:num)', 'Members::printCard/$1');
+    $routes->get('detail/(:hash)', 'Members::detail/$1');
 });
 $routes->group('categories',  static function ($routes) {
     $routes->get('/', 'Categories::index'); // Rute untuk melihat semua anggota

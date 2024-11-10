@@ -31,10 +31,15 @@ class Racks extends BaseController
 
     public function store()
     {
-        $this->rackModel->save([
+        try {
+            $this->rackModel->save([
             'rack_number' => $this->request->getPost('rack_number'),
         ]);
-        return redirect()->to('admin/racks');
+        return redirect()->to('/racks')->with('success', 'Rack created successfully.');
+        } catch (\Exception $e) {
+            return redirect()->to('/racks/create')->with('error', 'Unable to create rack: ' . $e->getMessage());
+        }
+        
     }
 
     public function edit($id)
@@ -45,23 +50,27 @@ class Racks extends BaseController
 
     public function update($id)
     {
-        $this->rackModel->update($id, [
+        try {
+            $this->rackModel->update($id, [
             'rack_number' => $this->request->getPost('rack_number'),
         ]);
-        return redirect()->to('admin/racks');
+        return redirect()->to('/racks')->with('success', 'Racks updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->to('/racks/' . $id . '/edit')->with('error', 'Unable to update rack: ' . $e->getMessage());
+        }
     }
 
     public function delete($id)
     {
         if ($this->rackModel->hasRelatedRecords($id)) {
-            return redirect()->to('admin/racks')->with('error', 'Unable to delete rack. It has associated books.');
+            return redirect()->to('/racks')->with('error', 'Unable to delete rack. It has associated books.');
         }
 
         try {
             $this->rackModel->delete($id);
-            return redirect()->to('admin/racks')->with('success', 'Rack deleted successfully.');
+            return redirect()->to('/racks')->with('success', 'Rack deleted successfully.');
         } catch (\Exception $e) {
-            return redirect()->to('admin/racks')->with('error', 'Unable to delete category: ' . $e->getMessage());
+            return redirect()->to('/racks')->with('error', 'Unable to delete rack: ' . $e->getMessage());
         }
     }
 }

@@ -61,7 +61,7 @@
                                 <span class="dt-checkbox-label"></span>
                             </div>
                         </td>
-                        <td><?= esc($admin['nama']); ?></td>
+                        <td><?= esc($admin['name']); ?></td>
                         <td><?= esc($admin['email']); ?></td>
                         <td>
                             <div class="table-actions">

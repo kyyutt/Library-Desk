@@ -46,10 +46,92 @@
 		type="text/css"
 		href="/assets/src/plugins/datatables/css/responsive.bootstrap4.min.css" />
 	<link rel="stylesheet" type="text/css" href="/assets/vendors/styles/style.css" />
+	<style>
+		#member-card {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+		/* Card Container */
+		.card-member {
+      width: 600px;
+      height: 350px;
+      background-image: url('/assets/vendors/images/bg-card.png'); /* Replace with your image path */
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      color: #ffffff;
+      font-weight: bold;
+      padding: 20px;
+      box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    /* Top Section */
+    .card-member .header-card{
+      position: absolute;
+      top: 20px;
+      left: 150px;
+      font-size: 30px;
+      color: #ffffff;
+    }
+
+    .card-member .sub-header{
+      position: absolute;
+      top: 133px;
+      left: 220px;
+      font-size: 18px;
+      font-weight: bolder;
+    }
+
+    /* Photo Section */
+    .card-member .photo {
+      position: absolute;
+      top: 124px;
+      left: 52px;
+      width: 136px;
+      height: 136px;
+      background-color: #0044cc;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .card-member .photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    /* Member Information */
+    .card-member .info {
+      position: absolute;
+      top: 180px;
+      left: 220px;
+    }
+
+    .card-member .info div {
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: #0c3a76;
+    }
+
+    /* ID Section */
+    .card-member .id-section {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      font-size: 18px;
+      color: #ffffff;
+    }
+	</style>
 </head>
 
 <body>
-	<div class="pre-loader">
+	<!-- <div class="pre-loader">
 		<div class="pre-loader-box">
 			<div class="loader-logo">
 				<img src="/assets/vendors/images/logo.png" alt="" />
@@ -60,7 +142,7 @@
 			<div class="percent" id="percent1">0%</div>
 			<div class="loading-text">Loading...</div>
 		</div>
-	</div>
+	</div> -->
 
 	<?= include('inc/header.php'); ?>
 	<?= include('inc/right-sidebar.php'); ?>
