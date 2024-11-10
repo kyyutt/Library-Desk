@@ -37,6 +37,16 @@
         </div>
     <?php endif; ?>
 
+    <!-- Error Alert -->
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> <?= session()->getFlashdata('error'); ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php endif; ?>
+
     <div class="pb-20">
         <table class="checkbox-datatable table nowrap">
             <thead>
@@ -66,10 +76,11 @@
                         <td>
                             <div class="table-actions">
                                 <a href="<?= base_url('/admins/edit/' . esc($admin['id'])); ?>" data-color="#265ed7">
-                                    <i class="icon-copy dw dw-edit2"></i>
+                                    <i class="icon-copy fa fa-edit" title="Edit"></i>
+                                </a>
                                 </a>
                                 <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($admin['id']); ?>" data-color="#e95959">
-                                    <i class="icon-copy dw dw-delete-3"></i>
+                                <i class="icon-copy fa fa-trash-o" title="Delete"></i>
                                 </a>
                             </div>
 

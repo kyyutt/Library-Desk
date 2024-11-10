@@ -27,7 +27,7 @@
                         <li><a href="<?= base_url('/categories'); ?>">Kategori</a></li>
                         <li><a href="<?= base_url('/racks'); ?>">Rak</a></li>
                         <li><a href="<?= base_url('/books'); ?>">Buku</a></li>
-                        <li><a href="<?= base_url('/books'); ?>">Denda</a></li>
+                        <li><a href="<?= base_url('/finesettings'); ?>">Denda</a></li>
                     </ul>
                 </li>
                 
@@ -59,9 +59,9 @@
                         <span class="mtext">Laporan</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="<?= base_url('/book-logs'); ?>">Log Aktivitas Buku</a></li>
-                        <li><a href="<?= base_url('/loan-reports'); ?>">Laporan Peminjaman</a></li>
-                        <li><a href="<?= base_url('/member-reports'); ?>">Laporan Anggota</a></li>
+                        <li><a href="<?= base_url('/reports/book-logs'); ?>">Log Aktivitas Buku</a></li>
+                        <li><a href="<?= base_url('/reports/loan-reports'); ?>">Laporan Peminjaman</a></li>
+                        <li><a href="<?= base_url('/reports/member-reports'); ?>">Laporan Member</a></li>
                     </ul>
                 </li>
                 

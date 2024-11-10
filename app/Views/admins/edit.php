@@ -30,22 +30,22 @@
     </div>
     <form action="<?= base_url('/admins/update/' . esc($admin['id'])); ?>" method="POST">
         <div class="row">
-            <div class="col-md-12 col-sm-12">
+            <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <label for="username">Username</label>
                     <input type="text" id="username" name="username" value="<?= esc($admin['username']); ?>" class="form-control" required>
                 </div>
             </div>
-            <div class="col-md-12 col-sm-12">
+            <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" value="<?= esc($admin['email']); ?>" class="form-control" required>
                 </div>
             </div>
-            <div class="col-md-12 col-sm-12">
+            <div class="col-md-6 col-sm-12">
                 <div class="form-group">
-                    <label for="nama">Nama</label>
-                    <input type="text" id="nama" name="nama" value="<?= esc($admin['nama']); ?>" class="form-control" required>
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" value="<?= esc($admin['name']); ?>" class="form-control" required>
                 </div>
             </div>
         </div>

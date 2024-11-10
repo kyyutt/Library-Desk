@@ -171,7 +171,7 @@
 						<div
 							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
 						>
-							<a class="dropdown-item" href="profile.html"
+							<!-- <a class="dropdown-item" href="profile.html"
 								><i class="dw dw-user1"></i> Profile</a
 							>
 							<a class="dropdown-item" href="profile.html"
@@ -179,7 +179,7 @@
 							>
 							<a class="dropdown-item" href="faq.html"
 								><i class="dw dw-help"></i> Help</a
-							>
+							> -->
 							<a class="dropdown-item" href="/auth/logout"
 								><i class="dw dw-logout"></i> Log Out</a
 							>

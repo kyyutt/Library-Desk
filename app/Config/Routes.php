@@ -62,6 +62,28 @@ $routes->group('loans', static function ($routes) {
     $routes->get('return/(:num)', 'Loans::returnLoan/$1'); // Route to mark loan as returned, identified by ID
     $routes->get('extendDueDate/(:num)', 'Loans::extendDueDate/$1'); // Route to extend the due date of a loan, identified by ID
 });
+// Routes for Fine Settings
+$routes->group('finesettings', function($routes) {
+    $routes->get('/', 'FineSettings::index');              // Display all fine settings
+    $routes->get('create', 'FineSettings::create');        // Show form to create a new fine setting
+    $routes->post('store', 'FineSettings::store');         // Store new fine setting in database
+    $routes->get('activate/(:num)', 'FineSettings::activate/$1'); // Activate a fine setting
+});
+
+$routes->group('reports', function($routes) {
+    // Route for Book Logs Report
+    $routes->get('book-logs', 'Report::bookLogs');
+
+    // Route for Loan Reports
+    $routes->get('loan-reports', 'Report::loanReports');
+
+    // Route for Member Reports
+    $routes->get('member-reports', 'Report::memberReports');
+    $routes->get('export-member-report', 'Report::exportToExcel');
+    $routes->get('export-pdf', 'Report::exportToPdf');
+
+
+});
 
 $routes->group('fines', static function ($routes) {
     $routes->get('/', 'Fines::index'); // Menampilkan daftar denda

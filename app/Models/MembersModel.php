@@ -10,7 +10,7 @@ class MembersModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $allowedFields    = ['no_member', 'name', 'email', 'phone', 'address', 'membership_date'];
+    protected $allowedFields    = ['no_member', 'name', 'email', 'phone', 'address', 'membership_date', 'status'];
 
     public function generateUniqueMemberNumber()
     {

@@ -26,7 +26,7 @@ class Auth extends BaseController
             if (password_verify($param['password'], $item['password'])) {
                 session()->set([
                     'uid' => $item['id'],
-                    'nama' => $item['email'], // Use 'name' as per the model definition
+                    'nama' => $item['name'], // Use 'name' as per the model definition
                     'isLogin' => true
                 ]);
                 return redirect()->to(base_url());
