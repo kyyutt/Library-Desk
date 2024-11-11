@@ -64,11 +64,12 @@ $routes->group('loans', static function ($routes) {
 });
 // Routes for Fine Settings
 $routes->group('finesettings', function($routes) {
-    $routes->get('/', 'FineSettings::index');              // Display all fine settings
-    $routes->get('create', 'FineSettings::create');        // Show form to create a new fine setting
-    $routes->post('store', 'FineSettings::store');         // Store new fine setting in database
-    $routes->get('activate/(:num)', 'FineSettings::activate/$1'); // Activate a fine setting
+    $routes->get('/', 'FineSettings::index');               // Display all fine settings
+    $routes->get('create', 'FineSettings::create');         // Show form to create a new fine setting
+    $routes->post('store', 'FineSettings::store');          // Store new fine setting in database
+    $routes->post('toggleActiveStatus/(:num)', 'FineSettings::toggleActiveStatus/$1'); // Toggle active status
 });
+
 
 $routes->group('reports', function($routes) {
     // Route for Book Logs Report

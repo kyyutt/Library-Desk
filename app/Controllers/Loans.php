@@ -103,41 +103,54 @@ class Loans extends BaseController
     }
 
     public function returnLoan($id)
-    {
-        $loan = $this->loanModel->find($id);
+{
+    $loan = $this->loanModel->find($id);
 
-        if (!$loan) {
-            return redirect()->to('/admin/loans')->with('error', 'Loan not found.');
-        }
+    if (!$loan) {
+        return redirect()->to('/admin/loans')->with('error', 'Loan not found.');
+    }
 
-        $fine = $this->finesModel->where('loan_id', $id)->where('status', 'unpaid')->first();
-        if ($fine) {
-            return redirect()->to('/admin/loans')->with('error', 'Cannot return loan with unpaid fines.');
-        }
+    // Check if there are unpaid fines before returning the loan
+    $fine = $this->finesModel->where('loan_id', $id)->where('status', 'unpaid')->first();
+    if ($fine) {
+        return redirect()->to('/admin/loans')->with('error', 'Cannot return loan with unpaid fines.');
+    }
 
-        $this->loanModel->update($id, [
-            'return_date' => date('Y-m-d')
+    // Update loan return information
+    $this->loanModel->update($id, [
+        'return_date' => date('Y-m-d'),
+        'status' => 'Returned'  // Set the status to 'Returned'
+    ]);
+
+    // Update the book's status to 'available' after return
+    $this->booksModel->update($loan['book_id'], ['status' => 'available']);
+
+    return redirect()->to('/admin/loans')->with('success', 'Loan successfully returned and status updated to Returned.');
+}
+
+
+
+public function extendDueDate($loanId)
+{
+    $loan = $this->loanModel->find($loanId);
+
+    if ($loan) {
+        // Extend the due date by 7 days
+        $newDueDate = date('Y-m-d', strtotime($loan['due_date'] . ' +7 days'));
+        
+        // Update the loan record with the new due date
+        $this->loanModel->update($loanId, [
+            'due_date' => $newDueDate,
+            'status' => 'Overdue'  // Update the status to 'Overdue'
         ]);
 
-        $this->booksModel->update($loan['book_id'], ['status' => 'available']);
+        // Remove any existing fines for this loan
+        $this->finesModel->where('loan_id', $loanId)->delete();
 
-        return redirect()->to('/admin/loans')->with('success', 'Loan successfully returned.');
+        return redirect()->to('admin/loans')->with('success', 'Due date extended to ' . $newDueDate . ' and status updated to Overdue.');
+    } else {
+        return redirect()->to('admin/loans')->with('error', 'Loan not found.');
     }
+}
 
-
-    public function extendDueDate($loanId)
-    {
-        $loan = $this->loanModel->find($loanId);
-
-        if ($loan) {
-            $newDueDate = date('Y-m-d', strtotime($loan['due_date'] . ' +7 days'));
-            $this->loanModel->update($loanId, ['due_date' => $newDueDate]);
-
-            $this->finesModel->where('loan_id', $loanId)->delete();
-
-            return redirect()->to('admin/loans')->with('success', 'Due date extended to ' . $newDueDate);
-        } else {
-            return redirect()->to('admin/loans')->with('error', 'Loan not found.');
-        }
-    }
 }

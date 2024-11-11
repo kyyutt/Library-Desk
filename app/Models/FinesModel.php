@@ -10,5 +10,6 @@ class FinesModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $allowedFields    = ['loan_id', 'fine_amount', 'status'];
+    protected $allowedFields    = ['loan_id', 'fine_amount', 'fine_setting', 'status'];
 }
+

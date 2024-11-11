@@ -20,29 +20,29 @@ class FineSettings extends BaseController
         return view('finesettings/index', $data);
     }
 
-    public function create()
-    {
-        return view('finesettings/create');
+    public function toggleActiveStatus($id)
+{
+    // Get the current status of the setting
+    $currentStatus = $this->fineSettingsModel->find($id)['is_active'];
+
+    // Check if there's already an active setting (status 1)
+    $activeSetting = $this->fineSettingsModel->where('is_active', 1)->first();
+
+    if ($currentStatus == 1) {
+        // If the setting is already active, deactivate it
+        $this->fineSettingsModel->update($id, ['is_active' => 0]);
+        return redirect()->to('/finesettings')->with('success', 'Fine setting deactivated successfully.');
     }
 
-    public function store()
-    {
-        $this->fineSettingsModel->save([
-            'fine_per_day' => $this->request->getPost('fine_per_day'),
-            'is_active' => 0,  // New settings start as inactive
-        ]);
-
-        return redirect()->to('/finesettings')->with('success', 'Fine setting created successfully.');
+    // If another setting is active, show an error message
+    if ($activeSetting) {
+        // Error: There is already an active setting
+        return redirect()->to('/finesettings')->with('error', 'Another fine setting is already active. Please deactivate it first.');
     }
 
-    public function activate($id)
-    {
-        // First, deactivate all settings
-        $this->fineSettingsModel->update(['is_active' => 1], ['is_active' => 0]);
+    // Otherwise, activate the setting and deactivate any other active setting
+    $this->fineSettingsModel->update($id, ['is_active' => 1]);
+    return redirect()->to('/finesettings')->with('success', 'Fine setting activated successfully.');
+}
 
-        // Then, activate the selected setting
-        $this->fineSettingsModel->update($id, ['is_active' => 1]);
-
-        return redirect()->to('/finesettings')->with('success', 'Fine setting activated successfully.');
-    }
 }

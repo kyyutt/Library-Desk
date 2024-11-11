@@ -77,20 +77,35 @@ class Reservations extends BaseController
     }
 
     public function store()
-    {
-        $data = [
-            'member_id' => $this->request->getPost('member_id'),
-            'book_id' => $this->request->getPost('book_id'),
-            'reservation_date' => $this->request->getPost('reservation_date'),
-            'status' => 'active',
-        ];
+{
+    // Step 1: Save the reservation data
+    $data = [
+        'member_id' => $this->request->getPost('member_id'),
+        'book_id' => $this->request->getPost('book_id'),
+        'reservation_date' => $this->request->getPost('reservation_date'),
+        'status' => 'active', // Initial reservation status
+    ];
+    $this->reservationModel->save($data);
 
-        $this->reservationModel->save($data);
+    // Step 2: Update the book status to "reserved"
+    $this->booksModel->update($this->request->getPost('book_id'), ['status' => 'reserved']);
 
-        $this->booksModel->update($this->request->getPost('book_id'), ['status' => 'reserved']);
+    // Step 3: Check if the book is currently "borrowed"
+    $loan = $this->loansModel
+                 ->where('book_id', $this->request->getPost('book_id'))
+                 ->where('status', 'On Loan')  // Checking if the book is currently on loan
+                 ->first();
 
-        return redirect()->to('/admin/reservations')->with('success', 'Reservasi berhasil ditambahkan.');
+    if ($loan) {
+        // If the book is borrowed, update the loan status to "Reserved"
+        $this->loansModel->update($loan['id'], ['status' => 'Reserved']);
     }
+
+    // Step 4: Redirect back with a success message
+    return redirect()->to('/reservations')->with('success', 'Reservation successfully added, and loan status updated to Reserved.');
+}
+
+
 
     public function complete($id)
     {
@@ -106,10 +121,10 @@ class Reservations extends BaseController
                 'due_date' => date('Y-m-d', strtotime('+7 days')) 
             ]);
 
-            return redirect()->to('admin/reservations')->with('success', 'Reservation marked as completed and loan created.');
+            return redirect()->to('/reservations')->with('success', 'Reservation marked as completed and loan created.');
         }
 
-        return redirect()->to('admin/reservations')->with('error', 'Invalid reservation or action.');
+        return redirect()->to('/reservations')->with('error', 'Invalid reservation or action.');
     }
 
     public function cancel($id)
@@ -118,9 +133,9 @@ class Reservations extends BaseController
 
         if ($reservation && $reservation['status'] == 'active') {
             $this->reservationModel->update($id, ['status' => 'cancelled']);
-            return redirect()->to('admin/reservations')->with('success', 'Reservation cancelled.');
+            return redirect()->to('/reservations')->with('success', 'Reservation cancelled.');
         }
 
-        return redirect()->to('admin/reservations')->with('error', 'Invalid reservation or action.');
+        return redirect()->to('/reservations')->with('error', 'Invalid reservation or action.');
     }
 }

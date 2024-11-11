@@ -135,7 +135,7 @@
   display: inline-block;
   width: 50px;
   height: 23px;
-  float:right;
+  float:left;
 }
 
 /* Hide default HTML checkbox */

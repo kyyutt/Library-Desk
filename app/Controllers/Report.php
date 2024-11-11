@@ -37,13 +37,13 @@ class Report extends Controller
 
     // Method for Loan Report
     public function loanReports()
-    {
-        // Fetch loans data
-        $data['loans'] = $this->loansModel->findAll();
+{
+    // Fetch loans data with member names, book titles, and fine details
+    $data['loans'] = $this->loansModel->getLoansWithDetails();
 
-        // Load the view with the data
-        return view('reports/loan_reports', $data);
-    }
+    // Load the view with the data
+    return view('reports/loan_reports', $data);
+}
 
    
     public function memberReports()

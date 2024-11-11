@@ -35,7 +35,10 @@
                 <th>Nama Member</th>
                 <th>Judul Buku</th>
                 <th>Tanggal Peminjaman</th>
+                <th>Jatuh Tempo</th>
                 <th>Tanggal Kembali</th>
+                <th>Denda</th>
+                <th>Status Denda</th>
                 <th>Status</th>
             </tr>
         </thead>
@@ -43,12 +46,15 @@
             <?php $no = 1; ?>
             <?php foreach ($loans as $loan): ?>
                 <tr>
-                    <td><?= esc($no++); ?></td>
-                    <td><?= esc($loan['member_name']); ?></td>
-                    <td><?= esc($loan['book_title']); ?></td>
-                    <td><?= esc($loan['loan_date']); ?></td>
-                    <td><?= esc($loan['return_date']); ?></td>
-                    <td><?= esc($loan['status']); ?></td>
+                <td><?= esc($no++); ?></td>
+<td><?= esc($loan['member_name']); ?></td>
+<td><?= esc($loan['book_title']); ?></td>
+<td><?= esc($loan['loan_date']); ?></td>
+<td><?= esc($loan['due_date']); ?></td>
+<td><?= isset($loan['return_date']) ? esc($loan['return_date']) : 'Belum dikembalikan'; ?></td>
+<td><?= isset($loan['fine_amount']) ? esc($loan['fine_amount']) : 'Tidak ada'; ?></td>
+<td><?= isset($loan['fine_status']) ? esc($loan['fine_status']) : 'Tidak ada'; ?></td>
+<td><?= esc($loan['status']); ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

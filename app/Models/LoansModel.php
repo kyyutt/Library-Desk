@@ -11,7 +11,7 @@ class LoansModel extends Model
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
 
-    protected $allowedFields    = ['member_id', 'book_id', 'loan_date', 'due_date', 'return_date'];
+    protected $allowedFields    = ['member_id', 'book_id', 'loan_date', 'due_date', 'return_date', 'status'];
 
     public function hasRelatedRecords($loanId)
     {
@@ -24,4 +24,15 @@ class LoansModel extends Model
         // Return true if there are any fines or reservations related to the loan
         return $fineExists > 0 || $reservationExists > 0;
     }
+
+    // Fetch loans with member names, book titles, and fine details
+    public function getLoansWithDetails()
+    {
+        return $this->select('loans.*, members.name as member_name, books.title as book_title, fines.fine_amount, fines.status as fine_status')
+                    ->join('members', 'loans.member_id = members.id')
+                    ->join('books', 'loans.book_id = books.id')
+                    ->join('fines', 'loans.id = fines.loan_id', 'left') // Left join to include loans without fines
+                    ->findAll();
+    }
+
 }
