@@ -27,23 +27,23 @@
         <h4 class="text-blue h4">Daftar Denda</h4>
     </div>
     <?php if (session()->getFlashdata('success')): ?>
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <strong>Success!</strong> <?= session()->getFlashdata('success'); ?>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-<?php endif; ?>
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <strong>Success!</strong> <?= session()->getFlashdata('success'); ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php endif; ?>
 
-<!-- Error Alert -->
-<?php if (session()->getFlashdata('error')): ?>
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <strong>Error!</strong> <?= session()->getFlashdata('error'); ?>
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
-<?php endif; ?>
+    <!-- Error Alert -->
+    <?php if (session()->getFlashdata('error')): ?>
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            <strong>Error!</strong> <?= session()->getFlashdata('error'); ?>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    <?php endif; ?>
     <div class="pb-20">
         <table class="checkbox-datatable table nowrap">
             <thead>
@@ -55,9 +55,10 @@
                         </div>
                     </th>
                     <th>Nama Anggota</th>
-                    <th>Judul Buku</th>
-                    <th>Tanggal Peminjaman</th>
-                    <th>Denda</th>
+            <th>Judul Buku</th>
+            <th>Tanggal Peminjaman</th>
+            <th>Hari Terlambat</th>
+            <th>Jumlah Denda</th>
                     <th class="datatable-nosort">Action</th>
                 </tr>
             </thead>
@@ -73,11 +74,12 @@
                         <td><?= esc($fine['member_name']); ?></td>
                         <td><?= esc($fine['book_title']); ?></td>
                         <td><?= esc($fine['loan_date']); ?></td>
+                        <td><?= esc($fine['late_days']); ?> Hari</td>
                         <td><?= esc($fine['fine_amount']); ?></td>
                         <td>
                             <div class="table-actions">
                                 <a href="#" data-toggle="modal" data-target="#pay-modal-<?= esc($fine['id']); ?>" data-color="#28a745" title="Tandai Lunas">
-                                    <i class="fa fa-check"></i>
+                                <i class="icon-copy fa fa-money" ></i>
                                 </a>
                             </div>
 

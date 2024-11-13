@@ -81,12 +81,12 @@
                         <td>
                             <div class="table-actions">
                                 <?php if (!$loan['return_date']): ?>
-                                    <a href="#" data-toggle="modal" data-target="#return-confirmation-modal-<?= esc($loan['id']); ?>" title="Tandai Terkembalikan" style="color: #28a745;">
-                                        <i class="fa fa-undo"></i>
+                                    <a href="#" data-toggle="modal" data-target="#return-confirmation-modal-<?= esc($loan['id']); ?>" title="Tandai Terkembalikan" style="color: orange;">
+                                    <i class="icon-copy fa fa-arrow-circle-down"></i>
                                     </a>
                                 <?php endif; ?>
-                                <a href="#" data-toggle="modal" data-target="#extend-confirmation-modal-<?= esc($loan['id']); ?>" title="Perpanjang Jatuh Tempo" style="color: orange;">
-                                    <i class="fa fa-calendar-plus-o"></i>
+                                <a href="#" data-toggle="modal" data-target="#extend-confirmation-modal-<?= esc($loan['id']); ?>" title="Perpanjang Jatuh Tempo" style="color: #28a745;">
+                                <i class="icon-copy fa fa-arrow-circle-o-up"></i>
                                 </a>
                             </div>
                         </td>

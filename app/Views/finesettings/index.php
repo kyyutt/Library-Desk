@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-6 col-sm-12">
             <div class="title">
-                <h4>Fine Settings</h4>
+                <h4>Setting Denda</h4>
             </div>
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
@@ -13,7 +13,7 @@
                         <a href="index.html">Home</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        Fine Settings
+                        Setting Denda
                     </li>
                 </ol>
             </nav>
@@ -26,7 +26,7 @@
 
 <div class="card-box mb-30">
     <div class="pd-20">
-        <h4 class="text-blue h4">Fine Per Day Settings</h4>
+        <h4 class="text-blue h4">Denda per hari</h4>
     </div>
 
     <!-- Success Alert -->
@@ -60,7 +60,7 @@
                             <span class="dt-checkbox-label"></span>
                         </div>
                     </th>
-                    <th>Fine per Day</th>
+                    <th>Denda per hari</th>
                     <th>Status</th>
                 </tr>
             </thead>
@@ -78,15 +78,15 @@
 
                         <!-- Toggle switch for status -->
                         <td>
-    <form action="<?= base_url('finesettings/toggleActiveStatus/' . $setting['id']); ?>" method="post">
-        <?= csrf_field(); ?> <!-- CSRF protection -->
-        
-        <label class="switch">
-            <input type="checkbox" class="primary" name="is_active" <?= $setting['is_active'] ? 'checked' : ''; ?> onclick="this.form.submit();">
-            <span class="slider round"></span>
-        </label>
-    </form>
-</td>
+                            <form action="<?= base_url('finesettings/toggleActiveStatus/' . $setting['id']); ?>" method="post">
+                                <?= csrf_field(); ?> <!-- CSRF protection -->
+
+                                <label class="switch">
+                                    <input type="checkbox" class="primary" name="is_active" <?= $setting['is_active'] ? 'checked' : ''; ?> onclick="this.form.submit();">
+                                    <span class="slider round"></span>
+                                </label>
+                            </form>
+                        </td>
 
 
                     </tr>

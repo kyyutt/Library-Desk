@@ -11,7 +11,7 @@ class LoansModel extends Model
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
 
-    protected $allowedFields    = ['member_id', 'book_id', 'loan_date', 'due_date', 'return_date', 'status'];
+    protected $allowedFields    = ['member_id', 'book_id', 'loan_date', 'due_date', 'return_date', 'fine_setting_id', 'status'];
 
     public function hasRelatedRecords($loanId)
     {

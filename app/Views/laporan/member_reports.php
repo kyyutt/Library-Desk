@@ -18,10 +18,10 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-    <a href="<?= base_url('reports/export-member-report'); ?>" class="btn btn-success">
+    <a href="<?= base_url('member-reports/export-excel'); ?>" class="btn btn-success">
         <i class="icon-copy fa fa-file-excel-o" aria-hidden="true"></i> Export to Excel
     </a>
-    <a href="<?= base_url('reports/export-pdf'); ?>" class="btn btn-primary">
+    <a href="<?= base_url('member-reports/export-pdf'); ?>" class="btn btn-primary">
         <i class="icon-copy fa fa-file-pdf-o" aria-hidden="true"></i> Export to PDF
     </a>
 </div>

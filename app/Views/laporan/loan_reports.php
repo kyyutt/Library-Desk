@@ -27,7 +27,7 @@
             <h4 class="text-blue h4">Daftar Peminjaman</h4>
         </div>
     </div>
-    
+
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -46,15 +46,15 @@
             <?php $no = 1; ?>
             <?php foreach ($loans as $loan): ?>
                 <tr>
-                <td><?= esc($no++); ?></td>
-<td><?= esc($loan['member_name']); ?></td>
-<td><?= esc($loan['book_title']); ?></td>
-<td><?= esc($loan['loan_date']); ?></td>
-<td><?= esc($loan['due_date']); ?></td>
-<td><?= isset($loan['return_date']) ? esc($loan['return_date']) : 'Belum dikembalikan'; ?></td>
-<td><?= isset($loan['fine_amount']) ? esc($loan['fine_amount']) : 'Tidak ada'; ?></td>
-<td><?= isset($loan['fine_status']) ? esc($loan['fine_status']) : 'Tidak ada'; ?></td>
-<td><?= esc($loan['status']); ?></td>
+                    <td><?= esc($no++); ?></td>
+                    <td><?= esc($loan['member_name']); ?></td>
+                    <td><?= esc($loan['book_title']); ?></td>
+                    <td><?= esc($loan['loan_date']); ?></td>
+                    <td><?= esc($loan['due_date']); ?></td>
+                    <td><?= isset($loan['return_date']) ? esc($loan['return_date']) : 'Belum dikembalikan'; ?></td>
+                    <td><?= isset($loan['fine_amount']) ? esc($loan['fine_amount']) : 'Tidak ada'; ?></td>
+                    <td><?= isset($loan['fine_status']) ? esc($loan['fine_status']) : 'Tidak ada'; ?></td>
+                    <td><?= esc($loan['status']); ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

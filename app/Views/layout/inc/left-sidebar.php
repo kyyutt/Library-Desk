@@ -10,12 +10,12 @@
             <ul id="accordion-menu">
                 <!-- Dashboard -->
                 <li>
-                    <a href="<?= base_url('admin'); ?>" class="dropdown-toggle no-arrow">
+                    <a href="<?= base_url('/'); ?>" class="dropdown-toggle no-arrow">
                         <span class="micon bi bi-house"></span>
                         <span class="mtext">Dashboard</span>
                     </a>
                 </li>
-                
+
                 <!-- Kelola Data -->
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
@@ -30,28 +30,28 @@
                         <li><a href="<?= base_url('/finesettings'); ?>">Denda</a></li>
                     </ul>
                 </li>
-                
+
                 <!-- Sirkulasi -->
-<li class="dropdown">
-    <a href="javascript:;" class="dropdown-toggle">
-        <span class="micon bi bi-book"></span>
-        <span class="mtext">Sirkulasi</span>
-    </a>
-    <ul class="submenu">
-        <li><a href="<?= base_url('/loans'); ?>">Peminjaman Buku</a></li>
-        <li><a href="<?= base_url('/reservations'); ?>">Reservasi Buku</a></li>
-    </ul>
-</li>
+                <li class="dropdown">
+                    <a href="javascript:;" class="dropdown-toggle">
+                        <span class="micon bi bi-book"></span>
+                        <span class="mtext">Sirkulasi</span>
+                    </a>
+                    <ul class="submenu">
+                        <li><a href="<?= base_url('/loans'); ?>">Peminjaman Buku</a></li>
+                        <li><a href="<?= base_url('/reservations'); ?>">Reservasi Buku</a></li>
+                    </ul>
+                </li>
 
-<!-- Denda -->
-<li>
-    <a href="<?= base_url('/fines'); ?>" class="dropdown-toggle no-arrow">
-        <span class="micon bi bi-exclamation-circle"></span>
-        <span class="mtext">Denda</span>
-    </a>
-</li>
+                <!-- Denda -->
+                <li>
+                    <a href="<?= base_url('/fines'); ?>" class="dropdown-toggle no-arrow">
+                        <span class="micon bi bi-exclamation-circle"></span>
+                        <span class="mtext">Denda</span>
+                    </a>
+                </li>
 
-                
+
                 <!-- Laporan -->
                 <li class="dropdown">
                     <a href="javascript:;" class="dropdown-toggle">
@@ -59,12 +59,12 @@
                         <span class="mtext">Laporan</span>
                     </a>
                     <ul class="submenu">
-                        <li><a href="<?= base_url('/reports/book-logs'); ?>">Log Aktivitas Buku</a></li>
-                        <li><a href="<?= base_url('/reports/loan-reports'); ?>">Laporan Peminjaman</a></li>
-                        <li><a href="<?= base_url('/reports/member-reports'); ?>">Laporan Member</a></li>
+                        <li><a href="<?= base_url('book-logs'); ?>">Log Aktivitas Buku</a></li>
+                        <li><a href="<?= base_url('loan-reports'); ?>">Laporan Peminjaman</a></li>
+                        <li><a href="<?= base_url('member-reports'); ?>">Laporan Member</a></li>
                     </ul>
                 </li>
-                
+
                 <li>
                     <a href="<?= base_url('/admins'); ?>" class="dropdown-toggle no-arrow">
                         <span class="micon bi bi-person-circle"></span>

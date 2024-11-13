@@ -50,6 +50,12 @@
         <table class="checkbox-datatable table nowrap">
             <thead>
                 <tr>
+                <th>
+                        <div class="dt-checkbox">
+                            <input type="checkbox" name="select_all" value="1" id="example-select-all" />
+                            <span class="dt-checkbox-label"></span>
+                        </div>
+                    </th>
                     <th>Judul Buku</th>
                     <th>Nama Anggota</th>
                     <th>Tanggal Reservasi</th>
@@ -60,6 +66,12 @@
             <tbody>
                 <?php foreach ($reservations as $reservation): ?>
                     <tr>
+                    <td>
+                            <div class="dt-checkbox">
+                                <input type="checkbox" name="reservation_ids[]" value="<?= esc($reservation['id']); ?>" id="reservation-<?= esc($reservation['id']); ?>" />
+                                <span class="dt-checkbox-label"></span>
+                            </div>
+                        </td>
                         <td><?= esc($reservation['book_title']); ?></td>
                         <td><?= esc($reservation['member_name']); ?></td>
                         <td><?= esc($reservation['reservation_date']); ?></td>
