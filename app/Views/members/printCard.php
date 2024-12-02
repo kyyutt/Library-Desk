@@ -20,6 +20,7 @@
         </div>
         <div class="col-md-6 col-sm-12 text-right">
             <a href="javascript:void(0);" onclick="printMemberCard()" class="btn btn-primary">Print</a>
+            <a href="javascript:void(0);" onclick="downloadMemberCard()" class="btn btn-success">Unduh JPG</a>
         </div>
     </div>
 </div>
@@ -34,8 +35,12 @@
             MEMBER ID CARD
         </div>
         <div class="photo">
-      <img src="https://via.placeholder.com/100" alt="Member Photo">
-    </div>
+            <?php if (!empty($member['photo']) && file_exists(FCPATH . 'uploads/members/' . $member['photo'])): ?>
+                <img src="<?= base_url('uploads/members/' . $member['photo']); ?>" alt="Foto Member" class="border-radius-100 shadow" width="40" height="40">
+            <?php else: ?>
+                <img src="https://via.placeholder.com/100" class="border-radius-100 shadow" width="40" height="40" alt="Foto Default">
+            <?php endif; ?>
+        </div>
         <div class="info">
             <div>Name: <?= esc($member['name']) ?></div>
             <div>Email: <?= esc($member['email']) ?></div>
@@ -48,6 +53,8 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
 <script>
     function printMemberCard() {
         var printContents = document.getElementById('member-card').innerHTML;
@@ -55,6 +62,23 @@
         document.body.innerHTML = printContents;
         window.print();
         document.body.innerHTML = originalContents;
+    }
+
+    function downloadMemberCard() {
+        var element = document.getElementById('member-card');
+        
+        html2canvas(element, {
+            useCORS: true, // CORS untuk gambar
+            allowTaint: true,
+            scale: 2 // Meningkatkan kualitas gambar
+        }).then(function(canvas) {
+            // Mengonversi canvas ke data URL JPG
+            var imageData = canvas.toDataURL('image/jpeg', 1.0);
+            var link = document.createElement('a');
+            link.href = imageData;
+            link.download = 'Member-ID-Card.jpg'; // Nama file yang akan diunduh
+            link.click();
+        });
     }
 </script>
 

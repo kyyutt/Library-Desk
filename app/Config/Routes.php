@@ -73,16 +73,12 @@ $routes->group('finesettings', function ($routes) {
 //     $routes->get('book-logs', 'Laporan::bookLogs');
 // });
 
-// $routes->group('loan-reports', static function ($routes) {
-//     $routes->get('loan-reports', 'Laporan::loanReports');
-//     $routes->get('export-member-report', 'Laporan::exportToExcel');
-//     $routes->get('export-pdf', 'Laporan::exportToPdf');
-// });
-$routes->group('member-reports', static function ($routes) {
-    $routes->get('/', 'Laporan::memberReports');
-    $routes->get('export-excel', 'Laporan::exportMemberToExcel');
-    $routes->get('export-pdf', 'Laporan::exportMemberToPdf');
+$routes->group('reports', function($routes) {
+    $routes->get('loan-reports', 'Laporan::loanReports'); // For general loan reports
+    $routes->get('loan-reports-by-member', 'Laporan::loanReportsByMember'); // For loan reports per member
+    $routes->get('member-reports', 'Laporan::memberReports'); // For general member reports (if needed)
 });
+
 
 
 $routes->group('fines', static function ($routes) {
@@ -108,4 +104,12 @@ $routes->group('admins', static function ($routes) {
     $routes->get('edit/(:hash)', 'Admins::edit/$1'); // Rute untuk mengedit anggota
     $routes->post('update/(:hash)', 'Admins::update/$1'); // Rute untuk memperbarui anggota
     $routes->get('delete/(:hash)', 'Admins::delete/$1'); // Rute untuk menghapus anggota
+});
+$routes->group('ebooks', static function ($routes) {
+    $routes->get('/', 'Ebooks::index'); // Rute untuk melihat semua anggota
+    $routes->get('create', 'Ebooks::create'); // Rute untuk membuat anggota baru
+    $routes->post('store', 'Ebooks::store'); // Rute untuk menyimpan anggota baru
+    $routes->get('edit/(:hash)', 'Ebooks::edit/$1'); // Rute untuk mengedit anggota
+    $routes->post('update/(:hash)', 'Ebooks::update/$1'); // Rute untuk memperbarui anggota
+    $routes->get('delete/(:hash)', 'Ebooks::delete/$1'); // Rute untuk menghapus anggota
 });

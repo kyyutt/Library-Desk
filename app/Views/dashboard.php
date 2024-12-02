@@ -81,7 +81,7 @@
 	</div>
 	<div class="col-lg-4 col-md-6 mb-20">
     <div class="card-box height-100-p pd-20 min-height-200px">
-        <div class="d-flex justify-content-between pb-10">
+        <div class="d-flex justify-content-between pb-10 mb-3">
             <div class="h5 mb-0">Latest Book</div>
             <div class="dropdown">
                 <a class="btn btn-link font-24 p-0 line-height-1 no-arrow dropdown-toggle" data-color="#1b3133" href="#" role="button" data-toggle="dropdown">
@@ -106,7 +106,7 @@
                         </div>
                         <div class="cta flex-shrink-0">
                             <span class="btn btn-sm 
-							<?= $book['status'] == 'available' ? 'btn-outline-succes' : ($book['status'] == 'borrowed' ? 'btn-outline-danger' : 'btn-outline-warning'); ?>">
+							<?= $book['status'] == 'available' ? 'btn-outline-success' : ($book['status'] == 'borrowed' ? 'btn-outline-danger' : 'btn-outline-warning'); ?>">
 							<?= esc(ucfirst($book['status'])); ?>
                             </span>
                         </div>

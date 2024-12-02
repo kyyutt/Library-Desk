@@ -57,10 +57,9 @@
                         </div>
                     </th>
                     <th>Judul</th>
-                    <th>Penulis</th>
-                    <th>Kategori</th>
+                    <th>Pegarang</th>
+                    <th>Penerbit</th>
                     <th>Tahun Terbit</th>
-                    <th>Rak</th>
                     <th>Status</th>
                     <th class="datatable-nosort">Aksi</th>
                 </tr>
@@ -76,9 +75,8 @@
                         </td>
                         <td><?= esc($book['title']); ?></td>
                         <td><?= esc($book['author']); ?></td>
-                        <td><?= esc($book['category']); ?></td>
+                        <td><?= esc($book['publisher']); ?></td>
                         <td><?= esc($book['year']); ?></td>
-                        <td><?= esc($book['rack']); ?></td>
 
                         <td>
                             <span class="badge rounded-pill text-white

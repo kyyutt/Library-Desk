@@ -26,7 +26,7 @@ class Home extends BaseController
     {
         // Total counts
         $totalBooks = $this->booksModel->countAllResults();
-        $booksOnLoan = $this->loansModel->where('status', 'On Loan')->countAllResults();
+        $booksOnLoan = $this->loansModel->where('return_date', null)->countAllResults();
         $overdueBooks = $this->loansModel->where('status', 'Overdue')->countAllResults();
         $totalMembers = $this->membersModel->countAllResults();
 

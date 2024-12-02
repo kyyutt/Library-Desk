@@ -86,11 +86,12 @@
                                 <?php if ($reservation['status'] == 'active'): ?>
                                     <!-- Complete action -->
                                     <a href="<?= base_url('/reservations/complete/' . esc($reservation['id'])); ?>" title="Complete Reservation">
-                                        <i class="icon-copy ion-checkmark-round text-success"></i>
+                                        
+                                    <i class="icon-copy fa fa-check-square-o text-success"></i>
                                     </a>
                                     <!-- Cancel action -->
                                     <a href="<?= base_url('/reservations/cancel/' . esc($reservation['id'])); ?>" title="Cancel Reservation">
-                                        <i class="icon-copy ion-close-round text-danger"></i>
+                                 <i class="icon-copy fa fa-window-close text-danger" aria-hidden="true"></i>
                                     </a>
                                 <?php endif; ?>
                             </div>

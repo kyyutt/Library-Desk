@@ -28,15 +28,13 @@
             <p class="mb-30">Lengkapi data member di bawah ini</p>
         </div>
     </div>
-    <form action="<?= base_url('/members/store'); ?>" method="POST">
+    <form action="<?= base_url('/members/store'); ?>" method="POST" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <label for="no_member">Nomor Member</label>
                     <!-- Input terlihat yang tidak bisa diubah -->
-                    <input type="text" id="no_member" class="form-control" value="<?= $no_member; ?>" disabled>
-                    <!-- Input tersembunyi untuk menyimpan nomor member -->
-                    <input type="hidden" name="no_member" value="<?= $no_member; ?>">
+                    <input type="text" id="no_member" name="no_member" class="form-control" placeholder="NPM / NIP / NIDN" required pattern="\d{9}|\d{18}|\d{10}" title="Masukkan NPM (10 digit), NIP (18 digit), atau NIDN (10 digit)">
                 </div>
             </div>
             <div class="col-md-6 col-sm-12">
@@ -68,7 +66,14 @@
                     <input type="text" id="address" name="address" class="form-control" placeholder="Alamat" required>
                 </div>
             </div>
-
+            <div class="col-md-6 col-sm-12">
+                <div class="form-group">
+                    <label for="photo">Upload Foto</label>
+                    <input type="file" id="photo" name="photo" class="form-control-file form-control" accept="image/*">
+                </div>
+            </div>
+        </div>
+        <div class="row">
             <div class="col-md-6 col-sm-12">
                 <div class="form-group">
                     <label for="membership_date">Tanggal Bergabung</label>
@@ -77,6 +82,7 @@
                 </div>
             </div>
         </div>
+
 
 <div class="row">
     <div class="col-md-12 col-sm-12">

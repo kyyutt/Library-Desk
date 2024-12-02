@@ -17,73 +17,45 @@
                 </ol>
             </nav>
         </div>
-        <div class="col-md-6 col-sm-12 text-right">
-    <a href="<?= base_url('member-reports/export-excel'); ?>" class="btn btn-success">
-        <i class="icon-copy fa fa-file-excel-o" aria-hidden="true"></i> Export to Excel
-    </a>
-    <a href="<?= base_url('member-reports/export-pdf'); ?>" class="btn btn-primary">
-        <i class="icon-copy fa fa-file-pdf-o" aria-hidden="true"></i> Export to PDF
-    </a>
-</div>
-
     </div>
 </div>
 
 <div class="card-box mb-30">
-    <div class="pd-20">
-        <h4 class="text-blue h4">Daftar Member</h4>
+    <div class="pd-20 pb-0">
+        <h4 class="text-blue h4">Laporan Member</h4>
     </div>
-
-    <!-- Success Alert -->
-    <?php if (session()->getFlashdata('success')): ?>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            <strong>Success!</strong> <?= session()->getFlashdata('success'); ?>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    <?php endif; ?>
-
-    <!-- Error Alert -->
-    <?php if (session()->getFlashdata('error')): ?>
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            <strong>Error!</strong> <?= session()->getFlashdata('error'); ?>
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-    <?php endif; ?>
-
-    <div class="pb-20">
-        <table class="table table-bordered">
-            <thead>
-                <tr>
-                    <th>No</th>
-                    <th>Nama</th>
-                    <th>Email</th>
-                    <th>Nomor Telepon</th>
-                    <th>Alamat</th>
-                    <th>Tanggal Bergabung</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php $no = 1; ?>
-                <?php foreach ($members as $member): ?>
-                    <tr>
-                        <td><?= esc($no++); ?></td>
-                        <td><?= esc($member['name']); ?></td>
-                        <td><?= esc($member['email']); ?></td>
-                        <td><?= esc($member['phone']); ?></td>
-                        <td><?= esc($member['address']); ?></td>
-                        <td><?= esc($member['membership_date']); ?></td>
-                        <td><?= esc($member['status']); ?></td>
+    <div class="pd-10">
+        <!-- Data Table -->
+        <div id="DataTables_Table_2_wrapper" class="dataTables_wrapper dt-bootstrap4 no-footer">
+            <table class="table hover multiple-select-row data-table-export nowrap dataTable no-footer dtr-inline" id="DataTables_Table_2" role="grid">
+                <thead>
+                    <tr role="row">
+                        <th class="table-plus datatable-nosort sorting_disabled" rowspan="1" colspan="1" aria-label="No">No</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Nama</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">Email</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Phone: activate to sort column ascending">Nomor Telepon</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Address: activate to sort column ascending">Alamat</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Join Date: activate to sort column ascending">Tanggal Bergabung</th>
+                        <th class="sorting" tabindex="0" aria-controls="DataTables_Table_2" rowspan="1" colspan="1" aria-label="Status: activate to sort column ascending">Status</th>
                     </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php $no = 1; ?>
+                    <?php foreach ($members as $member): ?>
+                        <tr role="row">
+                            <td class="table-plus"><?= esc($no++); ?></td>
+                            <td><?= esc($member['name']); ?></td>
+                            <td><?= esc($member['email']); ?></td>
+                            <td><?= esc($member['phone']); ?></td>
+                            <td><?= esc($member['address']); ?></td>
+                            <td><?= esc($member['membership_date']); ?></td>
+                            <td><?= esc($member['status']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
-
 
 <?= $this->endSection(); ?>

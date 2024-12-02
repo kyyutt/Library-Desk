@@ -10,18 +10,18 @@ class MembersModel extends Model
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
-    protected $allowedFields    = ['no_member', 'name', 'email', 'phone', 'address', 'membership_date', 'status'];
+    protected $allowedFields    = ['no_member', 'name', 'email', 'phone', 'address', 'membership_date', 'status', 'photo'];
 
-    public function generateUniqueMemberNumber()
-    {
-        do {
-            $noMember = 'MBR-' . rand(1000, 9999);
+    // public function generateUniqueMemberNumber()
+    // {
+    //     do {
+    //         $noMember = 'MBR-' . rand(1000, 9999);
 
-            $exists = $this->where('no_member', $noMember)->countAllResults();
-        } while ($exists > 0); 
+    //         $exists = $this->where('no_member', $noMember)->countAllResults();
+    //     } while ($exists > 0); 
 
-        return $noMember;
-    }
+    //     return $noMember;
+    // }
 
     public function hasRelatedRecords($memberId)
     {

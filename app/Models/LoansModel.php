@@ -31,8 +31,29 @@ class LoansModel extends Model
         return $this->select('loans.*, members.name as member_name, books.title as book_title, fines.fine_amount, fines.status as fine_status')
                     ->join('members', 'loans.member_id = members.id')
                     ->join('books', 'loans.book_id = books.id')
-                    ->join('fines', 'loans.id = fines.loan_id', 'left') // Left join to include loans without fines
+                    ->join('fines', 'loans.id = fines.loan_id', 'left') // Left join untuk pinjaman yang belum memiliki denda
                     ->findAll();
     }
+
+    // Metode baru untuk mengambil data dengan filter tanggal
+    public function getLoansWithDetailsFiltered($startDate, $endDate)
+    {
+        return $this->select('loans.*, members.name as member_name, books.title as book_title, fines.fine_amount, fines.status as fine_status')
+                    ->join('members', 'loans.member_id = members.id')
+                    ->join('books', 'loans.book_id = books.id')
+                    ->join('fines', 'loans.id = fines.loan_id', 'left')
+                    ->where('loan_date >=', $startDate) // Filter berdasarkan tanggal mulai
+                    ->where('loan_date <=', $endDate) // Filter berdasarkan tanggal akhir
+                    ->findAll();
+    }
+    public function getLoansByMember($memberId)
+{
+    return $this->select('loans.*, books.title AS book_title, members.name AS member_name')
+                ->join('books', 'books.id = loans.book_id')
+                ->join('members', 'members.id = loans.member_id')
+                ->where('members.id', $memberId)
+                ->findAll();
+}
+
 
 }

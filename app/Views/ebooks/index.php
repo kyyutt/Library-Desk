@@ -10,24 +10,26 @@
             <nav aria-label="breadcrumb" role="navigation">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item">
-                        <a href="index.html">Home</a>
+                        <a href="<?= base_url('/dashboard'); ?>">Home</a>
                     </li>
                     <li class="breadcrumb-item active" aria-current="page">
-                        DataTable
+                        Ebook
                     </li>
                 </ol>
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <a href="<?= base_url('/members/create'); ?>" class="btn btn-primary">Tambah Member</a>
+            <a href="<?= base_url('/ebooks/create'); ?>" class="btn btn-primary">Tambah Ebook</a>
         </div>
     </div>
 </div>
 
 <div class="card-box mb-30">
     <div class="pd-20">
-        <h4 class="text-blue h4">Daftar Member</h4>
+        <h4 class="text-blue h4">Daftar Ebook</h4>
     </div>
+
+    <!-- Success Alert -->
     <?php if (session()->getFlashdata('success')): ?>
         <div class="alert alert-success alert-dismissible fade show" role="alert">
             <strong>Success!</strong> <?= session()->getFlashdata('success'); ?>
@@ -37,6 +39,7 @@
         </div>
     <?php endif; ?>
 
+    <!-- Error Alert -->
     <?php if (session()->getFlashdata('error')): ?>
         <div class="alert alert-danger alert-dismissible fade show" role="alert">
             <strong>Error!</strong> <?= session()->getFlashdata('error'); ?>
@@ -56,62 +59,54 @@
                             <span class="dt-checkbox-label"></span>
                         </div>
                     </th>
-                    <th>Nama</th>
-                    <th>Nomor Member</th>
-                    <th>Email</th>
-                    <th>Telepon</th>
-                    <th>Tanggal Bergabung</th>
+                    <th>Judul Ebook</th>
+                    <th>Kategori</th>
+                    <th>File</th>
+                    <th>File Size</th>
+                    <th>Status</th>
                     <th class="datatable-nosort">Action</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($members as $member): ?>
-
+                <?php foreach ($ebooks as $ebook): ?>
                     <tr>
                         <td>
                             <div class="dt-checkbox">
-                                <input type="checkbox" name="member_ids[]" value="<?= esc($member['id']); ?>" id="member-<?= esc($member['id']); ?>" />
+                                <input type="checkbox" name="ebook_ids[]" value="<?= esc($ebook['id']); ?>" id="ebook-<?= esc($ebook['id']); ?>" />
                                 <span class="dt-checkbox-label"></span>
                             </div>
                         </td>
+                        <td><?= esc($ebook['title']); ?></td>
+                        <td><?= esc($ebook['category']); ?></td>
                         <td>
-                            <div class="name-avatar d-flex align-items-center">
-                                <div class="avatar mr-2 flex-shrink-0">
-                                    <!-- Cek apakah file foto ada -->
-                                    <!-- Cek apakah foto ada -->
-                                    <?php if (!empty($member['photo']) && file_exists(FCPATH . 'uploads/members/' . $member['photo'])): ?>
-    <img src="<?= base_url('uploads/members/' . $member['photo']); ?>" alt="Foto Member" class="border-radius-100 shadow" width="40" height="40">
-<?php else: ?>
-    <img src="https://via.placeholder.com/100" class="border-radius-100 shadow" width="40" height="40" alt="Foto Default">
-<?php endif; ?>
+                            <!-- Link untuk membuka file PDF -->
+                            <a href="<?= base_url('uploads/ebooks/' . esc($ebook['file_name'])); ?>" target="_blank" class="text-info">
 
 
-                                </div>
-                                <div class="txt">
-                                    <div class="weight-600"><?= esc($member['name']); ?></div>
-                                </div>
-                            </div>
+                                Lihat Ebook
+                            </a>
                         </td>
-                        <td><?= esc($member['no_member']); ?></td>
-                        <td><?= esc($member['email']); ?></td>
-                        <td><?= esc($member['phone']); ?></td>
-                        <td><?= esc($member['membership_date']); ?></td>
+
+                        <td>
+                            <!-- Convert file size to a more readable format -->
+                            <?= number_format($ebook['file_size'] / 1024, 2); ?> KB
+                        </td>
+                        <td>
+                            <?= esc($ebook['status'] === 'available' ? 'Tersedia' : 'Tidak Tersedia'); ?>
+                        </td>
+
                         <td>
                             <div class="table-actions">
-                                <a href="<?= base_url('/members/detail/' . esc($member['id'])); ?>" data-color="#198754" title="Detail">
-                                    <i class="icon-copy fa fa-eye"></i>
-                                </a>
-                                <a href="<?= base_url('/members/edit/' . esc($member['id'])); ?>" data-color="#265ed7" title="Edit">
+                                <a href="<?= base_url('/ebooks/edit/' . esc($ebook['id'])); ?>" data-color="#265ed7" title="Edit">
                                     <i class="icon-copy fa fa-edit"></i>
                                 </a>
-                                <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($member['id']); ?>" data-color="#e95959" title="Delete">
+                                <a href="#" data-toggle="modal" data-target="#confirmation-modal-<?= esc($ebook['id']); ?>" data-color="#e95959" title="Delete">
                                     <i class="icon-copy fa fa-trash-o"></i>
                                 </a>
-                                <a href="<?= base_url('/members/print/' . esc($member['id'])); ?>" data-color="#fd7e14" title="Print">
-                                    <i class="icon-copy fa fa-print"></i>
-                                </a>
                             </div>
-                            <div class="modal fade" id="confirmation-modal-<?= esc($member['id']); ?>" tabindex="-1" role="dialog" aria-hidden="true">
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="confirmation-modal-<?= esc($ebook['id']); ?>" tabindex="-1" role="dialog" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
@@ -122,7 +117,7 @@
                                         </div>
                                         <div class="modal-body text-center font-18">
                                             <p class="padding-top-30 mb-30">
-                                                Apakah Anda yakin ingin menghapus kategori ini?
+                                                Apakah Anda yakin ingin menghapus ebook ini?
                                             </p>
                                             <div class="padding-bottom-30 row" style="max-width: 170px; margin: 0 auto">
                                                 <div class="col-6">
@@ -131,7 +126,7 @@
                                                     </button>
                                                 </div>
                                                 <div class="col-6">
-                                                    <a href="<?= base_url('/members/delete/' . esc($member['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
+                                                    <a href="<?= base_url('/ebooks/delete/' . esc($ebook['id'])); ?>" class="btn btn-primary border-radius-100 btn-block">
                                                         YES
                                                     </a>
                                                 </div>

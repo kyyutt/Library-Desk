@@ -4,7 +4,7 @@
 <head>
   <!-- Basic Page Info -->
   <meta charset="utf-8" />
-  <title><?= isset($pageTitle) ? $pageTitle : 'New Page Title'; ?></title>
+  <title><?= isset($pageTitle) ? $pageTitle : 'Library Desk'; ?></title>
 
   <!-- Site favicon -->
   <link
@@ -47,7 +47,7 @@
     href="<?= base_url('assets/src/plugins/datatables/css/responsive.bootstrap4.min.css') ?>" />
   <link rel="stylesheet" type="text/css" href="<?= base_url('assets/vendors/styles/style.css') ?>" />
   <style>
-    #member-card {
+     #member-card {
       display: flex;
       justify-content: center;
       /* Center horizontally */
@@ -113,7 +113,7 @@
     /* Member Information */
     .card-member .info {
       position: absolute;
-      top: 180px;
+      top: 175px;
       left: 220px;
     }
 
@@ -198,6 +198,90 @@
     .slider.round:before {
       border-radius: 50%;
     }
+   
+    /* @media print {
+    @page {
+        size: 90mm 55mm;
+        margin: 0;
+    }
+
+.card-member {
+    width: 90mm;
+    height: 55mm;
+    background-image: url('/assets/vendors/images/bg-card.png');
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    color: #ffffff;
+    font-weight: bold;
+    padding: 1em;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    font-size: 0.9em; 
+}
+
+.card-member .header-card {
+    position: absolute;
+    top: 0.5em; 
+    left: 4em;
+    font-size: 1.5em; 
+    color: #ffffff;
+}
+
+.card-member .sub-header {
+    position: absolute;
+    top: 7em;
+    left: 10.5em;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.card-member .photo {
+    position: absolute;
+    top: 5.2em; 
+    left: 2em;
+    width: 20.5mm;
+    height: 20.5mm; 
+    background-color: #0044cc;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.card-member .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+
+.card-member .info {
+    position: absolute;
+    top: 7.3em;
+    left: 8.5em;
+}
+
+.card-member .info div {
+    margin-bottom: 0.5em; 
+    font-size: 0.5em; 
+    color: #0c3a76;
+}
+
+
+.card-member .id-section {
+    position: absolute;
+    bottom: 1em;
+    left: 0.5em;
+    font-size: 0.8em;
+    color: #ffffff;
+}
+} */
+
+
+    
   </style>
 </head>
 

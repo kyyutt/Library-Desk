@@ -90,7 +90,7 @@
             </table>
         </div>
     <?php else: ?>
-        <p class="mt-4">Tidak ada reservasi buku untuk member ini.</p>
+        <p class="alert alert-info mt-4">Tidak ada reservasi buku untuk member ini.</p>
     <?php endif; ?>
 
     <div class="row mt-4">
