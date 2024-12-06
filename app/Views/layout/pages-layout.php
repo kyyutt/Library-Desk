@@ -118,7 +118,7 @@
     }
 
     .card-member .info div {
-      margin-bottom: 10px;
+      margin-bottom: 5px;
       font-size: 14px;
       color: #0c3a76;
     }

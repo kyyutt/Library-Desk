@@ -81,8 +81,6 @@
                         <td>
                             <!-- Link untuk membuka file PDF -->
                             <a href="<?= base_url('uploads/ebooks/' . esc($ebook['file_name'])); ?>" target="_blank" class="text-info">
-
-
                                 Lihat Ebook
                             </a>
                         </td>

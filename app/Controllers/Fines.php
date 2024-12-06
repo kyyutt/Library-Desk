@@ -24,42 +24,42 @@ class Fines extends BaseController
     }
 
     public function index()
-{
-    $fines = $this->finesModel->where('status', 'unpaid')->findAll();
+    {
+        $fines = $this->finesModel->where('status', 'unpaid')->findAll();
 
-    foreach ($fines as &$fine) {
-        $loan = $this->loansModel->find($fine['loan_id']);
+        foreach ($fines as &$fine) {
+            $loan = $this->loansModel->find($fine['loan_id']);
 
-        if ($loan) {
-            $fine['member_id'] = $loan['member_id'];
-            $fine['book_id'] = $loan['book_id'];
-            $fine['loan_date'] = $loan['loan_date'];
-            $fine['due_date'] = $loan['due_date']; // Mengambil due_date dari loan
+            if ($loan) {
+                $fine['member_id'] = $loan['member_id'];
+                $fine['book_id'] = $loan['book_id'];
+                $fine['loan_date'] = $loan['loan_date'];
+                $fine['due_date'] = $loan['due_date']; // Mengambil due_date dari loan
 
-            $member = $this->membersModel->find($fine['member_id']);
-            $book = $this->booksModel->find($fine['book_id']);
+                $member = $this->membersModel->find($fine['member_id']);
+                $book = $this->booksModel->find($fine['book_id']);
 
-            $fine['member_name'] = $member ? $member['name'] : 'Member not found';
-            $fine['book_title'] = $book ? $book['title'] : 'Book not found';
+                $fine['member_name'] = $member ? $member['name'] : 'Member not found';
+                $fine['book_title'] = $book ? $book['title'] : 'Book not found';
 
-            // Hitung jumlah hari keterlambatan
-            $today = new \DateTime();
-            $dueDate = new \DateTime($fine['due_date']);
-            $lateDays = $today > $dueDate ? $today->diff($dueDate)->days : 0;
+                // Hitung jumlah hari keterlambatan
+                $today = new \DateTime();
+                $dueDate = new \DateTime($fine['due_date']);
+                $lateDays = $today > $dueDate ? $today->diff($dueDate)->days : 0;
 
-            $fine['late_days'] = $lateDays; // Menyimpan jumlah hari terlambat
-        } else {
-            $fine['member_name'] = 'Loan not found';
-            $fine['book_title'] = 'Loan not found';
-            $fine['loan_date'] = 'Loan not found';
-            $fine['due_date'] = 'Loan not found';
-            $fine['late_days'] = 0;
+                $fine['late_days'] = $lateDays; // Menyimpan jumlah hari terlambat
+            } else {
+                $fine['member_name'] = 'Loan not found';
+                $fine['book_title'] = 'Loan not found';
+                $fine['loan_date'] = 'Loan not found';
+                $fine['due_date'] = 'Loan not found';
+                $fine['late_days'] = 0;
+            }
         }
-    }
 
-    $data['fines'] = $fines;
-    return view('fines/index', $data);
-}
+        $data['fines'] = $fines;
+        return view('fines/index', $data);
+    }
 
 
     public function pay($id)

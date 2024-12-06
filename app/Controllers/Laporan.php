@@ -18,8 +18,6 @@ class Laporan extends Controller
         $this->memberModel = new MembersModel();
     }
 
-
-    // Method for Loan Report
     public function loanReports()
     {
         // Ambil parameter tanggal dari GET request
@@ -41,7 +39,6 @@ class Laporan extends Controller
             $data['loans'] = $this->loansModel->getLoansWithDetails();
         }
 
-        // Kirim data ke view
         return view('laporan/loan_reports', $data);
     }
 
@@ -50,35 +47,28 @@ class Laporan extends Controller
     public function memberReports()
     {
         $members = $this->memberModel->findAll();
-        // foreach ($members as &$member) {
-        //     $membershipDate = strtotime($member['membership_date']);
-        //     $currentDate = time();
-        //     $member['status'] = ($currentDate - $membershipDate > 365 * 24 * 60 * 60) ? 'inactive' : 'active';
-        // }
 
         return view('laporan/member_reports', ['members' => $members]);
     }
     public function loanReportsByMember()
-{
-    // Ambil semua members untuk dropdown
-    $members = $this->memberModel->findAll();
+    {
+        $members = $this->memberModel->findAll();
 
-    // Ambil member_id yang dipilih dari request
-    $member_id = $this->request->getVar('member_id');
+        // Ambil member_id yang dipilih dari request
+        $member_id = $this->request->getVar('member_id');
 
-    // Jika member_id dipilih, ambil data pinjaman untuk member tersebut
-    if ($member_id) {
-        $loans = $this->loansModel->getLoansByMember($member_id);
-    } else {
-        // Jika tidak ada member_id yang dipilih, tampilkan semua pinjaman
-        $loans = $this->loansModel->getLoansWithDetails();
+        // Jika member_id dipilih, ambil data pinjaman untuk member tersebut
+        if ($member_id) {
+            $loans = $this->loansModel->getLoansByMember($member_id);
+        } else {
+            // Jika tidak ada member_id yang dipilih, tampilkan semua pinjaman
+            $loans = $this->loansModel->getLoansWithDetails();
+        }
+
+        return view('laporan/loan_reports_by_member', [
+            'members' => $members,
+            'loans' => $loans,
+            'member_id' => $member_id,
+        ]);
     }
-
-    return view('laporan/loan_reports_by_member', [
-        'members' => $members,
-        'loans' => $loans,
-        'member_id' => $member_id,
-    ]);
-}
-
 }

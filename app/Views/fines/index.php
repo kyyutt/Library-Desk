@@ -17,9 +17,6 @@
                 </ol>
             </nav>
         </div>
-        <div class="col-md-6 col-sm-12 text-right">
-            <a href="//fines/create" class="btn btn-primary">Tambah Denda</a>
-        </div>
     </div>
 </div>
 <div class="card-box mb-30">

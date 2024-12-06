@@ -35,9 +35,9 @@ class Categories extends BaseController
             $this->categoryModel->save([
                 'category_name' => $this->request->getPost('category_name'),
             ]);
-            return redirect()->to('/categories')->with('success', 'Category created successfully.');
+            return redirect()->to('/categories')->with('success', 'Kategori berhasil ditambahkan.');
         } catch (\Exception $e) {
-            return redirect()->to('/categories/create')->with('error', 'Unable to create category: ' . $e->getMessage());
+            return redirect()->to('/categories/create')->with('error', 'Tidak dapat menambah kategori: ' . $e->getMessage());
         }
     }
 
@@ -53,23 +53,23 @@ class Categories extends BaseController
             $this->categoryModel->update($id, [
                 'category_name' => $this->request->getPost('category_name'),
             ]);
-            return redirect()->to('/categories')->with('success', 'Category updated successfully.');
+            return redirect()->to('/categories')->with('success', 'Kategori berhasil diupdate.');
         } catch (\Exception $e) {
-            return redirect()->to('/categories/' . $id . '/edit')->with('error', 'Unable to update category: ' . $e->getMessage());
+            return redirect()->to('/categories/' . $id . '/edit')->with('error', 'Tidak dapat mengupdate kategori: ' . $e->getMessage());
         }
     }
 
     public function delete($id)
     {
         if ($this->categoryModel->hasRelatedRecords($id)) {
-            return redirect()->to('/categories')->with('error', 'Unable to delete category. It has associated books.');
+            return redirect()->to('/categories')->with('error', 'Tidak dapat menghapus kategori. Kategori ini digunakan di buku');
         }
 
         try {
             $this->categoryModel->delete($id);
-            return redirect()->to('/categories')->with('success', 'Category deleted successfully.');
+            return redirect()->to('/categories')->with('success', 'Kategori berhasil dihapus.');
         } catch (\Exception $e) {
-            return redirect()->to('/categories')->with('error', 'Unable to delete category: ' . $e->getMessage());
+            return redirect()->to('/categories')->with('error', 'Tidak dapat menghapus kategori: ' . $e->getMessage());
         }
     }
 }

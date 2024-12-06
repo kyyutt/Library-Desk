@@ -19,15 +19,14 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <a href="javascript:void(0);" onclick="printMemberCard()" class="btn btn-primary">Print</a>
-            <a href="javascript:void(0);" onclick="downloadMemberCard()" class="btn btn-success">Unduh JPG</a>
+            <a id="download-btn" class="btn btn-success">Download</a>
+            <a id="print-btn" class="btn btn-warning">Print</a>
         </div>
     </div>
 </div>
 
-<!-- Card Member Section -->
 <div class="pd-20 card-box mb-30" id="member-card">
-    <div class="card-member">
+    <div class="card-member" id="card">
         <div class="header-card">
             LIBRARY DESK
         </div>
@@ -53,33 +52,62 @@
     </div>
 </div>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
 <script>
-    function printMemberCard() {
-        var printContents = document.getElementById('member-card').innerHTML;
-        var originalContents = document.body.innerHTML;
-        document.body.innerHTML = printContents;
-        window.print();
-        document.body.innerHTML = originalContents;
-    }
-
-    function downloadMemberCard() {
-        var element = document.getElementById('member-card');
-        
-        html2canvas(element, {
-            useCORS: true, // CORS untuk gambar
-            allowTaint: true,
-            scale: 2 // Meningkatkan kualitas gambar
-        }).then(function(canvas) {
-            // Mengonversi canvas ke data URL JPG
-            var imageData = canvas.toDataURL('image/jpeg', 1.0);
-            var link = document.createElement('a');
-            link.href = imageData;
-            link.download = 'Member-ID-Card.jpg'; // Nama file yang akan diunduh
-            link.click();
+    document.getElementById('download-btn').addEventListener('click', function () {
+            const card = document.getElementById('card');
+            html2canvas(card).then(canvas => {
+                const link = document.createElement('a');
+                link.download = 'member_card.png'; // Nama file unduhan
+                link.href = canvas.toDataURL(); // Data gambar
+                link.click();
+            });
         });
-    }
+        document.getElementById('print-btn').addEventListener('click', function () {
+        const card = document.getElementById('card');
+        
+        html2canvas(card).then(canvas => {
+            // konvert canvas menjadi URL gambar
+            const imageData = canvas.toDataURL('image/png');
+            
+            // buka jendela baru untuk print gambar
+            const printWindow = window.open('', '_blank');
+            printWindow.document.open();
+            printWindow.document.write(`
+                <html>
+                <head>
+                    <title>Print Member Card</title>
+                    <style>
+                        body {
+                            margin: 0;
+                            display: flex;
+                            justify-content: center;
+                            align-items: center;
+                            height: 100vh;
+                            background-color: #fff;
+                        }
+                        img {
+                            max-width: 100%;
+                            height: auto;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <img src="${imageData}" alt="Member Card">
+                </body>
+                </html>
+            `);
+            printWindow.document.close();
+
+            printWindow.onload = function () {
+                printWindow.print();
+                printWindow.close();
+            };
+        }).catch(error => {
+            console.error('html2canvas error:', error);
+        });
+    });
 </script>
 
 <?= $this->endSection(); ?>

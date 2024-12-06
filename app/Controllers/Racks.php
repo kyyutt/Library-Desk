@@ -35,9 +35,9 @@ class Racks extends BaseController
             $this->rackModel->save([
             'rack_number' => $this->request->getPost('rack_number'),
         ]);
-        return redirect()->to('/racks')->with('success', 'Rack created successfully.');
+        return redirect()->to('/racks')->with('success', 'Rak berhasil ditambahkan .');
         } catch (\Exception $e) {
-            return redirect()->to('/racks/create')->with('error', 'Unable to create rack: ' . $e->getMessage());
+            return redirect()->to('/racks/create')->with('error', 'Tidak dapat menambah rak: ' . $e->getMessage());
         }
         
     }
@@ -54,23 +54,23 @@ class Racks extends BaseController
             $this->rackModel->update($id, [
             'rack_number' => $this->request->getPost('rack_number'),
         ]);
-        return redirect()->to('/racks')->with('success', 'Racks updated successfully.');
+        return redirect()->to('/racks')->with('success', 'Rak berhasil diupdate.');
         } catch (\Exception $e) {
-            return redirect()->to('/racks/' . $id . '/edit')->with('error', 'Unable to update rack: ' . $e->getMessage());
+            return redirect()->to('/racks/' . $id . '/edit')->with('error', 'Tidak dapat menghapus rak: ' . $e->getMessage());
         }
     }
 
     public function delete($id)
     {
         if ($this->rackModel->hasRelatedRecords($id)) {
-            return redirect()->to('/racks')->with('error', 'Unable to delete rack. It has associated books.');
+            return redirect()->to('/racks')->with('error', 'Tidak dapat menghapus rak. Rak ini digunakan di buku.');
         }
 
         try {
             $this->rackModel->delete($id);
-            return redirect()->to('/racks')->with('success', 'Rack deleted successfully.');
+            return redirect()->to('/racks')->with('success', 'Rak berhasil dihapus.');
         } catch (\Exception $e) {
-            return redirect()->to('/racks')->with('error', 'Unable to delete rack: ' . $e->getMessage());
+            return redirect()->to('/racks')->with('error', 'Tidak bisa menghapus rak: ' . $e->getMessage());
         }
     }
 }

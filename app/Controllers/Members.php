@@ -64,35 +64,35 @@ class Members extends BaseController
     public function store()
     {
         try {
-            // Validate the member input, including uniqueness of no_member
             $validationRules = [
                 'photo' => [
-                    'label' => 'Photo',
-                    'rules' => 'uploaded[photo]|is_image[photo]|mime_in[photo,image/jpg,image/jpeg,image/png]|max_size[photo,2048]'  // Max size 2MB, allowed types jpg, jpeg, png
+                    'label' => 'Foto',
+                    'rules' => 'uploaded[photo]|is_image[photo]|mime_in[photo,image/jpg,image/jpeg,image/png]|max_size[photo,2048]' // Maksimal ukuran 2MB, tipe yang diperbolehkan jpg, jpeg, png
                 ],
                 'no_member' => [
-                    'label' => 'Member Number',
-                    'rules' => 'required|is_unique[members.no_member]'  // Ensure no_member is unique
+                    'label' => 'Nomor Anggota',
+                    'rules' => 'required|is_unique[members.no_member]' // Pastikan no_member unik
                 ]
             ];
 
+            // Validasi data yang dimasukkan
             if (!$this->validate($validationRules)) {
                 return redirect()->to('/members/create')->withInput()->with('error', $this->validator->getError('photo') ?: $this->validator->getError('no_member'));
             }
 
-            // Process the uploaded photo
+            // Proses file foto yang diunggah
             $photo = $this->request->getFile('photo');
             $newPhotoName = null;
 
             if ($photo && $photo->isValid() && !$photo->hasMoved()) {
-                // Generate unique name for the photo
+                // Buat nama unik untuk foto
                 $newPhotoName = uniqid('photo_', true) . '.' . $photo->getExtension();
 
-                // Move the file to the public/uploads/members directory
+                // Pindahkan file ke direktori public/uploads/members
                 $photo->move(FCPATH . 'uploads/members', $newPhotoName);
             }
 
-            // Save member data into the database
+            // Simpan data anggota ke dalam database
             $this->memberModel->save([
                 'no_member' => $this->request->getPost('no_member'),
                 'name' => $this->request->getPost('name'),
@@ -100,14 +100,15 @@ class Members extends BaseController
                 'phone' => $this->request->getPost('phone'),
                 'address' => $this->request->getPost('address'),
                 'membership_date' => $this->request->getPost('membership_date'),
-                'photo' => $newPhotoName, // Save photo name in database
+                'photo' => $newPhotoName, // Simpan nama foto ke dalam database
             ]);
 
-            return redirect()->to('/members')->with('success', 'Member added successfully.');
+            return redirect()->to('/members')->with('success', 'Anggota berhasil ditambahkan.');
         } catch (\Exception $e) {
-            return redirect()->to('/members')->with('error', 'Unable to add member: ' . $e->getMessage());
+            return redirect()->to('/members')->with('error', 'Tidak dapat menambahkan anggota: ' . $e->getMessage());
         }
     }
+
 
     public function edit($id)
     {
@@ -118,15 +119,15 @@ class Members extends BaseController
     public function update($id)
     {
         try {
-            // Validate the member input, including uniqueness of no_member
+            // Validasi input anggota, termasuk keunikan no_member
             $validationRules = [
                 'photo' => [
-                    'label' => 'Photo',
-                    'rules' => 'is_image[photo]|mime_in[photo,image/jpg,image/jpeg,image/png]|max_size[photo,2048]'  // Max size 2MB, allowed types jpg, jpeg, png
+                    'label' => 'Foto',
+                    'rules' => 'is_image[photo]|mime_in[photo,image/jpg,image/jpeg,image/png]|max_size[photo,2048]'  // Maksimal ukuran 2MB, tipe yang diperbolehkan jpg, jpeg, png
                 ],
                 'no_member' => [
-                    'label' => 'Member Number',
-                    'rules' => 'required|is_unique[members.no_member,id,' . $id . ']'  // Ensure no_member is unique, but allow current member ID to update itself
+                    'label' => 'Nomor Anggota',
+                    'rules' => 'required|is_unique[members.no_member,id,' . $id . ']'  // Pastikan no_member unik, tetapi izinkan ID anggota saat ini untuk memperbarui dirinya sendiri
                 ]
             ];
 
@@ -134,48 +135,49 @@ class Members extends BaseController
                 return redirect()->to("/members/edit/{$id}")->withInput()->with('error', $this->validator->getError('photo') ?: $this->validator->getError('no_member'));
             }
 
-            // Process the uploaded photo
+            // Pproses foto yang diunggah
             $photo = $this->request->getFile('photo');
-            $existingMember = $this->memberModel->find($id); // Get existing member data
+            $existingMember = $this->memberModel->find($id); // Ambil data anggota yang ada
 
             if ($photo && $photo->isValid() && !$photo->hasMoved()) {
-                // Generate a unique name for the new photo
+                // buat nama unik untuk foto baru
                 $newPhotoName = uniqid('photo_', true) . '.' . $photo->getExtension();
 
-                // Move the file to the public/uploads/members directory
+                // Pindahkan file ke direktori public/uploads/members
                 $photo->move(FCPATH . 'uploads/members', $newPhotoName);
 
-                // Delete the old photo if it exists
+                // papus foto lama jika ada
                 if (!empty($existingMember['photo']) && file_exists(FCPATH . 'uploads/members/' . $existingMember['photo'])) {
                     unlink(FCPATH . 'uploads/members/' . $existingMember['photo']);
                 }
             } else {
-                // Use the old photo if no new file is uploaded
+                // Gunakan foto lama jika tidak ada file baru yang diunggah
                 $newPhotoName = $existingMember['photo'];
             }
 
-            // Update the member data in the database
+            // perbarui data anggota di database
             $this->memberModel->update($id, [
                 'no_member' => $this->request->getPost('no_member'),
                 'name' => $this->request->getPost('name'),
                 'email' => $this->request->getPost('email'),
                 'phone' => $this->request->getPost('phone'),
                 'address' => $this->request->getPost('address'),
-                'photo' => $newPhotoName, // Update photo
+                'photo' => $newPhotoName, // Perbarui foto
             ]);
 
-            return redirect()->to('/members')->with('success', 'Member updated successfully.');
+            return redirect()->to('/members')->with('success', 'Anggota berhasil diperbarui.');
         } catch (\Exception $e) {
-            return redirect()->to('/members')->with('error', 'Unable to update member: ' . $e->getMessage());
+            return redirect()->to('/members')->with('error', 'Tidak dapat memperbarui anggota: ' . $e->getMessage());
         }
     }
+
 
     public function printCard($id)
     {
         $member = $this->memberModel->find($id);
 
         if (!$member) {
-            return redirect()->to('/members')->with('error', 'Member not found.');
+            return redirect()->to('/members')->with('error', 'Member tidak ditemukan.');
         }
 
         $data['member'] = $member;
@@ -184,15 +186,17 @@ class Members extends BaseController
 
     public function delete($id)
     {
+        // dicek apakah anggota memiliki catatan terkait pinjaman atau reservasi
         if ($this->memberModel->hasRelatedRecords($id)) {
-            return redirect()->to('/members')->with('error', 'Unable to delete member. It has associated loans or reservations.');
+            return redirect()->to('/members')->with('error', 'Tidak dapat menghapus anggota. Anggota ini memiliki pinjaman atau reservasi terkait.');
         }
 
         try {
+            // Hapus anggota dari database
             $this->memberModel->delete($id);
-            return redirect()->to('/members')->with('success', 'Member deleted successfully.');
+            return redirect()->to('/members')->with('success', 'Anggota berhasil dihapus.');
         } catch (\Exception $e) {
-            return redirect()->to('/members')->with('error', 'Unable to delete member: ' . $e->getMessage());
+            return redirect()->to('/members')->with('error', 'Tidak dapat menghapus anggota: ' . $e->getMessage());
         }
     }
 }

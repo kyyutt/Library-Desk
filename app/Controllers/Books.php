@@ -63,9 +63,9 @@ class Books extends BaseController
                 'category_id' => $this->request->getPost('category_id'),
                 'rack_id' => $this->request->getPost('rack_id')
             ]);
-            return redirect()->to('/books')->with('success', 'Book added successfully.');
+            return redirect()->to('/books')->with('success', 'Buku berhasil ditambahkann.');
         } catch (\Exception $e) {
-            return redirect()->to('/books/create')->with('error', 'Unable to add book: ' . $e->getMessage());
+            return redirect()->to('/books/create')->with('error', 'Tidak dapat menambah buku: ' . $e->getMessage());
         }
     }
 
@@ -110,23 +110,23 @@ class Books extends BaseController
                 'category_id' => $this->request->getPost('category_id'),
                 'rack_id' => $this->request->getPost('rack_id')
             ]);
-            return redirect()->to('/books')->with('success', 'Book updated successfully.');
+            return redirect()->to('/books')->with('success', 'Buku berhasil diupdate.');
         } catch (\Exception $e) {
-            return redirect()->to('/books/edit/' . $id)->with('error', 'Unable to update book: ' . $e->getMessage());
+            return redirect()->to('/books/edit/' . $id)->with('error', 'Tidak dapat mengupdate buku: ' . $e->getMessage());
         }
     }
 
     public function delete($id)
     {
         if ($this->bookModel->hasRelatedRecords($id)) {
-            return redirect()->to('/books')->with('error', 'Unable to delete book. It has associated loans or reservations.');
+            return redirect()->to('/books')->with('error', 'Tidak dapat menghapus buku. Buku ini sedang dipinjam atau direservasi.');
         }
 
         try {
             $this->bookModel->delete($id);
-            return redirect()->to('/books')->with('success', 'Book deleted successfully.');
+            return redirect()->to('/books')->with('success', 'Buku berhasil di hapus.');
         } catch (\Exception $e) {
-            return redirect()->to('/books')->with('error', 'Unable to delete book: ' . $e->getMessage());
+            return redirect()->to('/books')->with('error', 'Tidak dapat menghapus buku: ' . $e->getMessage());
         }
     }
 }

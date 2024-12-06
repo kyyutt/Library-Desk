@@ -34,12 +34,12 @@ class Reservations extends BaseController
             $member = array_filter($members, function ($m) use ($reservation) {
                 return $m['id'] === $reservation['member_id'];
             });
-            $reservation['member_name'] = !empty($member) ? reset($member)['name'] : 'No member found';
+            $reservation['member_name'] = !empty($member) ? reset($member)['name'] : 'Anggota tidak ditemukan';
 
             $book = array_filter($books, function ($b) use ($reservation) {
                 return $b['id'] === $reservation['book_id'];
             });
-            $reservation['book_title'] = !empty($book) ? reset($book)['title'] : 'No book found';
+            $reservation['book_title'] = !empty($book) ? reset($book)['title'] : 'Buku tidak ditemukan';
         }
 
         $data['reservations'] = $reservations;
@@ -52,23 +52,23 @@ class Reservations extends BaseController
         $membersModel = new MembersModel();
         $booksModel = new BooksModel();
 
-        // Get active loans (books that are currently borrowed)
+        // Mendapatkan pinjaman aktif (buku yang sedang dipinjam)
         $activeLoans = $loansModel->where('return_date', null)->findAll();
 
-        // Get all books
+        // Mendapatkan semua buku
         $allBooks = $booksModel->findAll();
 
-        // Get borrowed books' IDs
+        // Mendapatkan ID buku yang dipinjam
         $borrowedBookIds = array_column($activeLoans, 'book_id');
 
-        // Filter out borrowed books to get available books
+        // Menyaring buku yang sedang dipinjam untuk mendapatkan buku yang tersedia
         if (!empty($borrowedBookIds)) {
             $availableBooks = $booksModel->whereNotIn('id', $borrowedBookIds)->findAll();
         } else {
-            $availableBooks = $allBooks;  // If no books are borrowed, all books are available
+            $availableBooks = $allBooks;  // Jika tidak ada buku yang dipinjam, semua buku tersedia
         }
 
-        // Get available members (members who haven't borrowed a book)
+        // Mendapatkan anggota yang tersedia (anggota yang belum meminjam buku)
         $borrowedMemberIds = array_column($activeLoans, 'member_id');
         if (!empty($borrowedMemberIds)) {
             $availableMembers = $membersModel->whereNotIn('id', $borrowedMemberIds)->findAll();
@@ -76,73 +76,68 @@ class Reservations extends BaseController
             $availableMembers = $membersModel->findAll();
         }
 
-        // Add book and member information to active loans
+        // Menambahkan informasi buku dan anggota ke pinjaman aktif
         foreach ($activeLoans as &$loan) {
-            // Add member name to each loan
+            // Menambahkan nama anggota untuk setiap pinjaman
             $member = $membersModel->find($loan['member_id']);
             $loan['member_name'] = $member['name'];
 
-            // Add book title to each loan
+            // Menambahkan judul buku untuk setiap pinjaman
             $book = $booksModel->find($loan['book_id']);
             $loan['book_title'] = $book['title'];
         }
 
         return view('reservations/create', [
-            'availableBooks' => $availableBooks,  // Available books
-            'activeLoans' => $activeLoans,        // Currently borrowed books
-            'availableMembers' => $availableMembers, // Available members
-            'reservationDate' => date('Y-m-d'),  // Current date for reservation
+            'availableBooks' => $availableBooks,  // Buku yang tersedia
+            'activeLoans' => $activeLoans,        // Buku yang sedang dipinjam
+            'availableMembers' => $availableMembers, // Anggota yang tersedia
+            'reservationDate' => date('Y-m-d'),  // Tanggal saat ini untuk reservasi
         ]);
     }
-
-
-
     public function store()
     {
-        // Step 1: Save the reservation data
+        // Langkah 1: Simpan data reservasi
         $data = [
             'member_id' => $this->request->getPost('member_id'),
             'book_id' => $this->request->getPost('book_id'),
             'reservation_date' => $this->request->getPost('reservation_date'),
-            'status' => 'active', // Initial reservation status
+            'status' => 'active', // Status awal reservasi
         ];
         $this->reservationModel->save($data);
 
-        // Step 2: Update the book status to "reserved"
+        // Langkah 2: Perbarui status buku menjadi "reserved"
         $this->booksModel->update($this->request->getPost('book_id'), ['status' => 'reserved']);
 
-        // Step 3: Check if the book is currently "borrowed"
+        // Langkah 3: Periksa apakah buku saat ini "dipinjam"
         $loan = $this->loansModel
             ->where('book_id', $this->request->getPost('book_id'))
-            ->where('status', 'On Loan')  // Checking if the book is currently on loan
+            ->where('status', 'On Loan')  // Memeriksa apakah buku saat ini dipinjam
             ->first();
 
         if ($loan) {
-            // If the book is borrowed, update the loan status to "Reserved"
+            // Jika buku dipinjam, perbarui status pinjaman menjadi "Reserved"
             $this->loansModel->update($loan['id'], ['status' => 'Reserved']);
         }
 
-        // Step 4: Redirect back with a success message
-        return redirect()->to('/reservations')->with('success', 'Reservation successfully added, and loan status updated to Reserved.');
+        // Langkah 4: Redirect kembali dengan pesan sukses
+        return redirect()->to('/reservations')->with('success', 'Reservasi berhasil ditambahkan, dan status pinjaman diperbarui menjadi Reserved.');
     }
-
-
 
     public function complete($id)
     {
-        // Step 1: Find the reservation record
+        // Langkah 1: Temukan catatan reservasi
         $reservation = $this->reservationModel->find($id);
 
-        // Check if the reservation exists and is active
+        // Periksa apakah reservasi ada dan masih aktif
         if ($reservation && $reservation['status'] == 'active') {
 
-            // Step 2: Get the active loan for the given book and member
+            // Langkah 2: Dapatkan pinjaman aktif untuk buku dan anggota yang diberikan
             $existingLoan = $this->loansModel->where('book_id', $reservation['book_id'])
                 ->where('status', 'Returned')
                 ->first();
 
             if (!$existingLoan) {
-                return redirect()->to('/reservations')->with('error', 'The book has not been returned yet.');
+                return redirect()->to('/reservations')->with('error', 'Buku belum dikembalikan.');
             }
 
             $this->reservationModel->update($id, ['status' => 'completed']);
@@ -151,53 +146,50 @@ class Reservations extends BaseController
             $activeFineSetting = $fineSettingsModel->where('is_active', 1)->first();
 
             if (!$activeFineSetting) {
-                return redirect()->to('/reservations')->with('error', 'No active fine setting found.');
+                return redirect()->to('/reservations')->with('error', 'Tidak ditemukan pengaturan denda aktif.');
             }
 
-            // Step 5: Insert a new loan record
+            // Langkah 5: Masukkan catatan pinjaman baru
             $this->loansModel->insert([
                 'book_id' => $reservation['book_id'],
                 'member_id' => $reservation['member_id'],
                 'loan_date' => date('Y-m-d'),
                 'due_date' => date('Y-m-d', strtotime('+7 days')),
-                'fine_setting_id' => $activeFineSetting['id'],  // Set the fine_setting_id
-                'status' => 'On Loan'  // Set the status to "On Loan"
+                'fine_setting_id' => $activeFineSetting['id'],  // Atur fine_setting_id
+                'status' => 'On Loan'  // Atur status menjadi "On Loan"
             ]);
 
-            // Redirect back with a success message
-            return redirect()->to('/reservations')->with('success', 'Reservation marked as completed and loan created.');
+            // Redirect kembali dengan pesan sukses
+            return redirect()->to('/reservations')->with('success', 'Reservasi ditandai sebagai selesai dan pinjaman baru dibuat.');
         }
 
-        // If the reservation is invalid or inactive
-        return redirect()->to('/reservations')->with('error', 'Invalid reservation or action.');
+        // Jika reservasi tidak valid atau tidak aktif
+        return redirect()->to('/reservations')->with('error', 'Reservasi atau tindakan tidak valid.');
     }
-
-
-
     public function cancel($id)
     {
         $reservation = $this->reservationModel->find($id);
 
         if ($reservation && $reservation['status'] == 'active') {
-            // Step 1: Update reservation status to cancelled
+            // Langkah 1: Perbarui status reservasi menjadi dibatalkan
             $this->reservationModel->update($id, ['status' => 'cancelled']);
 
-            // Step 2: Check if there's an active loan associated with the reservation's book
+            // Langkah 2: Periksa apakah ada pinjaman aktif yang terkait dengan buku reservasi
             $loan = $this->loansModel
                 ->where('book_id', $reservation['book_id'])
-                ->where('status', 'Reserved')  // Checking if the book is reserved
+                ->where('status', 'Reserved')  // Memeriksa apakah buku dalam status reserved
                 ->first();
 
             if ($loan) {
-                // Step 3: If the loan is found, change the status to 'On Loan'
+                // Langkah 3: Jika pinjaman ditemukan, ubah statusnya menjadi 'On Loan'
                 $this->loansModel->update($loan['id'], ['status' => 'On Loan']);
             }
 
-            // Step 4: Redirect back with a success message
-            return redirect()->to('/reservations')->with('success', 'Reservation cancelled and loan status updated to "On Loan".');
+            // Langkah 4: Redirect kembali dengan pesan sukses
+            return redirect()->to('/reservations')->with('success', 'Reservasi dibatalkan dan status pinjaman diperbarui menjadi "On Loan".');
         }
 
-        // If the reservation is invalid or inactive
-        return redirect()->to('/reservations')->with('error', 'Invalid reservation or action.');
+        // Jika reservasi tidak valid atau tidak aktif
+        return redirect()->to('/reservations')->with('error', 'Reservasi atau tindakan tidak valid.');
     }
-}
+}  

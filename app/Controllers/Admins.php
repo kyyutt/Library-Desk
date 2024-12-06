@@ -65,26 +65,21 @@ class Admins extends BaseController
     public function delete($id)
     {
         try {
-            // Get the current logged-in admin's ID
             $currentAdminId = session()->get('uid');
 
-            // Check if the admin is logged in and if session is set
             if (!$currentAdminId) {
-                return redirect()->to('/login')->with('error', 'You are not logged in.');
+                return redirect()->to('/login')->with('error', 'Anda belum masuk.');
             }
 
-            // Check if the admin is trying to delete themselves
             if ($id == $currentAdminId) {
-                return redirect()->to('/admins')->with('error', 'You cannot delete your own account.');
+                return redirect()->to('/admins')->with('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
             }
 
-            // Proceed with the deletion
             $this->adminsModel->delete($id);
 
             return redirect()->to('/admins')->with('success', 'Admin berhasil dihapus.');
         } catch (\Exception $e) {
-            // Catch any exceptions that occur during the deletion process
-            return redirect()->to('/admins')->with('error', 'An error occurred: ' . $e->getMessage());
+            return redirect()->to('/admins')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
         }
     }
 }
